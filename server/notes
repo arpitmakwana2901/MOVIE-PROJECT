@@ -1,0 +1,199 @@
+{
+  "movieId": "67056e5f85f3df5a19b3b99a",
+  "timeSlots": [
+    {
+      "time": "10:00 AM",
+      "categories": {
+        "premium": { "price": 250, "rows": ["K","J","I","H","G","F","E"], "seatsPerRow": 20 },
+        "executive": { "price": 230, "rows": ["D","C","B"], "seatsPerRow": 17 },
+        "normal": { "price": 210, "rows": ["A"], "seatsPerRow": 15 }
+      }
+    },
+    {
+      "time": "2:00 PM",
+      "categories": {
+        "premium": { "price": 250, "rows": ["K","J","I","H","G","F","E"], "seatsPerRow": 20 },
+        "executive": { "price": 230, "rows": ["D","C","B"], "seatsPerRow": 17 },
+        "normal": { "price": 210, "rows": ["A"], "seatsPerRow": 15 }
+      }
+    },
+    {
+      "time": "7:30 PM",
+      "categories": {
+        "premium": { "price": 250, "rows": ["K","J","I","H","G","F","E"], "seatsPerRow": 20 },
+        "executive": { "price": 230, "rows": ["D","C","B"], "seatsPerRow": 17 },
+        "normal": { "price": 210, "rows": ["A"], "seatsPerRow": 15 }
+      }
+    }
+  ]
+}
+
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+
+
+{
+  "movieId": "67056e5f85f3df5a19b3b99a",
+  "timeSlots": [
+    {
+      "time": "10:00 AM",
+      "categories": [
+        {
+          "categoryName": "premium",
+          "price": 250,
+          "rows": [
+            { "rowName": "K", "seats": [{"seatNumber":"K1","isBooked":false},{"seatNumber":"K2","isBooked":false},{"seatNumber":"K3","isBooked":false},{"seatNumber":"K4","isBooked":false},{"seatNumber":"K5","isBooked":false},{"seatNumber":"K6","isBooked":false},{"seatNumber":"K7","isBooked":false},{"seatNumber":"K8","isBooked":false},{"seatNumber":"K9","isBooked":false},{"seatNumber":"K10","isBooked":false},{"seatNumber":"K11","isBooked":false},{"seatNumber":"K12","isBooked":false},{"seatNumber":"K13","isBooked":false},{"seatNumber":"K14","isBooked":false},{"seatNumber":"K15","isBooked":false},{"seatNumber":"K16","isBooked":false},{"seatNumber":"K17","isBooked":false},{"seatNumber":"K18","isBooked":false},{"seatNumber":"K19","isBooked":false},{"seatNumber":"K20","isBooked":false}]},
+            { "rowName": "J", "seats": [{"seatNumber":"J1","isBooked":false},{"seatNumber":"J2","isBooked":false},{"seatNumber":"J3","isBooked":false},{"seatNumber":"J4","isBooked":false},{"seatNumber":"J5","isBooked":false},{"seatNumber":"J6","isBooked":false},{"seatNumber":"J7","isBooked":false},{"seatNumber":"J8","isBooked":false},{"seatNumber":"J9","isBooked":false},{"seatNumber":"J10","isBooked":false},{"seatNumber":"J11","isBooked":false},{"seatNumber":"J12","isBooked":false},{"seatNumber":"J13","isBooked":false},{"seatNumber":"J14","isBooked":false},{"seatNumber":"J15","isBooked":false},{"seatNumber":"J16","isBooked":false},{"seatNumber":"J17","isBooked":false},{"seatNumber":"J18","isBooked":false},{"seatNumber":"J19","isBooked":false},{"seatNumber":"J20","isBooked":false}]},
+            { "rowName": "I", "seats": [{"seatNumber":"I1","isBooked":false},{"seatNumber":"I2","isBooked":false},{"seatNumber":"I3","isBooked":false},{"seatNumber":"I4","isBooked":false},{"seatNumber":"I5","isBooked":false},{"seatNumber":"I6","isBooked":false},{"seatNumber":"I7","isBooked":false},{"seatNumber":"I8","isBooked":false},{"seatNumber":"I9","isBooked":false},{"seatNumber":"I10","isBooked":false},{"seatNumber":"I11","isBooked":false},{"seatNumber":"I12","isBooked":false},{"seatNumber":"I13","isBooked":false},{"seatNumber":"I14","isBooked":false},{"seatNumber":"I15","isBooked":false},{"seatNumber":"I16","isBooked":false},{"seatNumber":"I17","isBooked":false},{"seatNumber":"I18","isBooked":false},{"seatNumber":"I19","isBooked":false},{"seatNumber":"I20","isBooked":false}]},
+            { "rowName": "H", "seats": [{"seatNumber":"H1","isBooked":false},{"seatNumber":"H2","isBooked":false},{"seatNumber":"H3","isBooked":false},{"seatNumber":"H4","isBooked":false},{"seatNumber":"H5","isBooked":false},{"seatNumber":"H6","isBooked":false},{"seatNumber":"H7","isBooked":false},{"seatNumber":"H8","isBooked":false},{"seatNumber":"H9","isBooked":false},{"seatNumber":"H10","isBooked":false},{"seatNumber":"H11","isBooked":false},{"seatNumber":"H12","isBooked":false},{"seatNumber":"H13","isBooked":false},{"seatNumber":"H14","isBooked":false},{"seatNumber":"H15","isBooked":false},{"seatNumber":"H16","isBooked":false},{"seatNumber":"H17","isBooked":false},{"seatNumber":"H18","isBooked":false},{"seatNumber":"H19","isBooked":false},{"seatNumber":"H20","isBooked":false}]},
+            { "rowName": "G", "seats": [{"seatNumber":"G1","isBooked":false},{"seatNumber":"G2","isBooked":false},{"seatNumber":"G3","isBooked":false},{"seatNumber":"G4","isBooked":false},{"seatNumber":"G5","isBooked":false},{"seatNumber":"G6","isBooked":false},{"seatNumber":"G7","isBooked":false},{"seatNumber":"G8","isBooked":false},{"seatNumber":"G9","isBooked":false},{"seatNumber":"G10","isBooked":false},{"seatNumber":"G11","isBooked":false},{"seatNumber":"G12","isBooked":false},{"seatNumber":"G13","isBooked":false},{"seatNumber":"G14","isBooked":false},{"seatNumber":"G15","isBooked":false},{"seatNumber":"G16","isBooked":false},{"seatNumber":"G17","isBooked":false},{"seatNumber":"G18","isBooked":false},{"seatNumber":"G19","isBooked":false},{"seatNumber":"G20","isBooked":false}]},
+            { "rowName": "F", "seats": [{"seatNumber":"F1","isBooked":false},{"seatNumber":"F2","isBooked":false},{"seatNumber":"F3","isBooked":false},{"seatNumber":"F4","isBooked":false},{"seatNumber":"F5","isBooked":false},{"seatNumber":"F6","isBooked":false},{"seatNumber":"F7","isBooked":false},{"seatNumber":"F8","isBooked":false},{"seatNumber":"F9","isBooked":false},{"seatNumber":"F10","isBooked":false},{"seatNumber":"F11","isBooked":false},{"seatNumber":"F12","isBooked":false},{"seatNumber":"F13","isBooked":false},{"seatNumber":"F14","isBooked":false},{"seatNumber":"F15","isBooked":false},{"seatNumber":"F16","isBooked":false},{"seatNumber":"F17","isBooked":false},{"seatNumber":"F18","isBooked":false},{"seatNumber":"F19","isBooked":false},{"seatNumber":"F20","isBooked":false}]},
+            { "rowName": "E", "seats": [{"seatNumber":"E1","isBooked":false},{"seatNumber":"E2","isBooked":false},{"seatNumber":"E3","isBooked":false},{"seatNumber":"E4","isBooked":false},{"seatNumber":"E5","isBooked":false},{"seatNumber":"E6","isBooked":false},{"seatNumber":"E7","isBooked":false},{"seatNumber":"E8","isBooked":false},{"seatNumber":"E9","isBooked":false},{"seatNumber":"E10","isBooked":false},{"seatNumber":"E11","isBooked":false},{"seatNumber":"E12","isBooked":false},{"seatNumber":"E13","isBooked":false},{"seatNumber":"E14","isBooked":false},{"seatNumber":"E15","isBooked":false},{"seatNumber":"E16","isBooked":false},{"seatNumber":"E17","isBooked":false},{"seatNumber":"E18","isBooked":false},{"seatNumber":"E19","isBooked":false},{"seatNumber":"E20","isBooked":false}]}
+          ]
+        },
+        {
+          "categoryName": "executive",
+          "price": 230,
+          "rows": [
+            { "rowName": "D", "seats": [{"seatNumber":"D1","isBooked":false},{"seatNumber":"D2","isBooked":false},{"seatNumber":"D3","isBooked":false},{"seatNumber":"D4","isBooked":false},{"seatNumber":"D5","isBooked":false},{"seatNumber":"D6","isBooked":false},{"seatNumber":"D7","isBooked":false},{"seatNumber":"D8","isBooked":false},{"seatNumber":"D9","isBooked":false},{"seatNumber":"D10","isBooked":false},{"seatNumber":"D11","isBooked":false},{"seatNumber":"D12","isBooked":false},{"seatNumber":"D13","isBooked":false},{"seatNumber":"D14","isBooked":false},{"seatNumber":"D15","isBooked":false},{"seatNumber":"D16","isBooked":false},{"seatNumber":"D17","isBooked":false}]},
+            { "rowName": "C", "seats": [{"seatNumber":"C1","isBooked":false},{"seatNumber":"C2","isBooked":false},{"seatNumber":"C3","isBooked":false},{"seatNumber":"C4","isBooked":false},{"seatNumber":"C5","isBooked":false},{"seatNumber":"C6","isBooked":false},{"seatNumber":"C7","isBooked":false},{"seatNumber":"C8","isBooked":false},{"seatNumber":"C9","isBooked":false},{"seatNumber":"C10","isBooked":false},{"seatNumber":"C11","isBooked":false},{"seatNumber":"C12","isBooked":false},{"seatNumber":"C13","isBooked":false},{"seatNumber":"C14","isBooked":false},{"seatNumber":"C15","isBooked":false},{"seatNumber":"C16","isBooked":false},{"seatNumber":"C17","isBooked":false}]},
+            { "rowName": "B", "seats": [{"seatNumber":"B1","isBooked":false},{"seatNumber":"B2","isBooked":false},{"seatNumber":"B3","isBooked":false},{"seatNumber":"B4","isBooked":false},{"seatNumber":"B5","isBooked":false},{"seatNumber":"B6","isBooked":false},{"seatNumber":"B7","isBooked":false},{"seatNumber":"B8","isBooked":false},{"seatNumber":"B9","isBooked":false},{"seatNumber":"B10","isBooked":false},{"seatNumber":"B11","isBooked":false},{"seatNumber":"B12","isBooked":false},{"seatNumber":"B13","isBooked":false},{"seatNumber":"B14","isBooked":false},{"seatNumber":"B15","isBooked":false},{"seatNumber":"B16","isBooked":false},{"seatNumber":"B17","isBooked":false}]}
+          ]
+        },
+        {
+          "categoryName": "normal",
+          "price": 210,
+          "rows": [
+            { "rowName": "A", "seats": [{"seatNumber":"A1","isBooked":false},{"seatNumber":"A2","isBooked":false},{"seatNumber":"A3","isBooked":false},{"seatNumber":"A4","isBooked":false},{"seatNumber":"A5","isBooked":false},{"seatNumber":"A6","isBooked":false},{"seatNumber":"A7","isBooked":false},{"seatNumber":"A8","isBooked":false},{"seatNumber":"A9","isBooked":false},{"seatNumber":"A10","isBooked":false},{"seatNumber":"A11","isBooked":false},{"seatNumber":"A12","isBooked":false},{"seatNumber":"A13","isBooked":false},{"seatNumber":"A14","isBooked":false},{"seatNumber":"A15","isBooked":false}]}
+          ]
+        }
+      ]
+    },
+    {
+      "time": "2:00 PM",
+            "categories": [
+        {
+          "categoryName": "premium",
+          "price": 250,
+          "rows": [
+            { "rowName": "K", "seats": [{"seatNumber":"K1","isBooked":false},{"seatNumber":"K2","isBooked":false},{"seatNumber":"K3","isBooked":false},{"seatNumber":"K4","isBooked":false},{"seatNumber":"K5","isBooked":false},{"seatNumber":"K6","isBooked":false},{"seatNumber":"K7","isBooked":false},{"seatNumber":"K8","isBooked":false},{"seatNumber":"K9","isBooked":false},{"seatNumber":"K10","isBooked":false},{"seatNumber":"K11","isBooked":false},{"seatNumber":"K12","isBooked":false},{"seatNumber":"K13","isBooked":false},{"seatNumber":"K14","isBooked":false},{"seatNumber":"K15","isBooked":false},{"seatNumber":"K16","isBooked":false},{"seatNumber":"K17","isBooked":false},{"seatNumber":"K18","isBooked":false},{"seatNumber":"K19","isBooked":false},{"seatNumber":"K20","isBooked":false}]},
+            { "rowName": "J", "seats": [{"seatNumber":"J1","isBooked":false},{"seatNumber":"J2","isBooked":false},{"seatNumber":"J3","isBooked":false},{"seatNumber":"J4","isBooked":false},{"seatNumber":"J5","isBooked":false},{"seatNumber":"J6","isBooked":false},{"seatNumber":"J7","isBooked":false},{"seatNumber":"J8","isBooked":false},{"seatNumber":"J9","isBooked":false},{"seatNumber":"J10","isBooked":false},{"seatNumber":"J11","isBooked":false},{"seatNumber":"J12","isBooked":false},{"seatNumber":"J13","isBooked":false},{"seatNumber":"J14","isBooked":false},{"seatNumber":"J15","isBooked":false},{"seatNumber":"J16","isBooked":false},{"seatNumber":"J17","isBooked":false},{"seatNumber":"J18","isBooked":false},{"seatNumber":"J19","isBooked":false},{"seatNumber":"J20","isBooked":false}]},
+            { "rowName": "I", "seats": [{"seatNumber":"I1","isBooked":false},{"seatNumber":"I2","isBooked":false},{"seatNumber":"I3","isBooked":false},{"seatNumber":"I4","isBooked":false},{"seatNumber":"I5","isBooked":false},{"seatNumber":"I6","isBooked":false},{"seatNumber":"I7","isBooked":false},{"seatNumber":"I8","isBooked":false},{"seatNumber":"I9","isBooked":false},{"seatNumber":"I10","isBooked":false},{"seatNumber":"I11","isBooked":false},{"seatNumber":"I12","isBooked":false},{"seatNumber":"I13","isBooked":false},{"seatNumber":"I14","isBooked":false},{"seatNumber":"I15","isBooked":false},{"seatNumber":"I16","isBooked":false},{"seatNumber":"I17","isBooked":false},{"seatNumber":"I18","isBooked":false},{"seatNumber":"I19","isBooked":false},{"seatNumber":"I20","isBooked":false}]},
+            { "rowName": "H", "seats": [{"seatNumber":"H1","isBooked":false},{"seatNumber":"H2","isBooked":false},{"seatNumber":"H3","isBooked":false},{"seatNumber":"H4","isBooked":false},{"seatNumber":"H5","isBooked":false},{"seatNumber":"H6","isBooked":false},{"seatNumber":"H7","isBooked":false},{"seatNumber":"H8","isBooked":false},{"seatNumber":"H9","isBooked":false},{"seatNumber":"H10","isBooked":false},{"seatNumber":"H11","isBooked":false},{"seatNumber":"H12","isBooked":false},{"seatNumber":"H13","isBooked":false},{"seatNumber":"H14","isBooked":false},{"seatNumber":"H15","isBooked":false},{"seatNumber":"H16","isBooked":false},{"seatNumber":"H17","isBooked":false},{"seatNumber":"H18","isBooked":false},{"seatNumber":"H19","isBooked":false},{"seatNumber":"H20","isBooked":false}]},
+            { "rowName": "G", "seats": [{"seatNumber":"G1","isBooked":false},{"seatNumber":"G2","isBooked":false},{"seatNumber":"G3","isBooked":false},{"seatNumber":"G4","isBooked":false},{"seatNumber":"G5","isBooked":false},{"seatNumber":"G6","isBooked":false},{"seatNumber":"G7","isBooked":false},{"seatNumber":"G8","isBooked":false},{"seatNumber":"G9","isBooked":false},{"seatNumber":"G10","isBooked":false},{"seatNumber":"G11","isBooked":false},{"seatNumber":"G12","isBooked":false},{"seatNumber":"G13","isBooked":false},{"seatNumber":"G14","isBooked":false},{"seatNumber":"G15","isBooked":false},{"seatNumber":"G16","isBooked":false},{"seatNumber":"G17","isBooked":false},{"seatNumber":"G18","isBooked":false},{"seatNumber":"G19","isBooked":false},{"seatNumber":"G20","isBooked":false}]},
+            { "rowName": "F", "seats": [{"seatNumber":"F1","isBooked":false},{"seatNumber":"F2","isBooked":false},{"seatNumber":"F3","isBooked":false},{"seatNumber":"F4","isBooked":false},{"seatNumber":"F5","isBooked":false},{"seatNumber":"F6","isBooked":false},{"seatNumber":"F7","isBooked":false},{"seatNumber":"F8","isBooked":false},{"seatNumber":"F9","isBooked":false},{"seatNumber":"F10","isBooked":false},{"seatNumber":"F11","isBooked":false},{"seatNumber":"F12","isBooked":false},{"seatNumber":"F13","isBooked":false},{"seatNumber":"F14","isBooked":false},{"seatNumber":"F15","isBooked":false},{"seatNumber":"F16","isBooked":false},{"seatNumber":"F17","isBooked":false},{"seatNumber":"F18","isBooked":false},{"seatNumber":"F19","isBooked":false},{"seatNumber":"F20","isBooked":false}]},
+            { "rowName": "E", "seats": [{"seatNumber":"E1","isBooked":false},{"seatNumber":"E2","isBooked":false},{"seatNumber":"E3","isBooked":false},{"seatNumber":"E4","isBooked":false},{"seatNumber":"E5","isBooked":false},{"seatNumber":"E6","isBooked":false},{"seatNumber":"E7","isBooked":false},{"seatNumber":"E8","isBooked":false},{"seatNumber":"E9","isBooked":false},{"seatNumber":"E10","isBooked":false},{"seatNumber":"E11","isBooked":false},{"seatNumber":"E12","isBooked":false},{"seatNumber":"E13","isBooked":false},{"seatNumber":"E14","isBooked":false},{"seatNumber":"E15","isBooked":false},{"seatNumber":"E16","isBooked":false},{"seatNumber":"E17","isBooked":false},{"seatNumber":"E18","isBooked":false},{"seatNumber":"E19","isBooked":false},{"seatNumber":"E20","isBooked":false}]}
+          ]
+        },
+        {
+          "categoryName": "executive",
+          "price": 230,
+          "rows": [
+            { "rowName": "D", "seats": [{"seatNumber":"D1","isBooked":false},{"seatNumber":"D2","isBooked":false},{"seatNumber":"D3","isBooked":false},{"seatNumber":"D4","isBooked":false},{"seatNumber":"D5","isBooked":false},{"seatNumber":"D6","isBooked":false},{"seatNumber":"D7","isBooked":false},{"seatNumber":"D8","isBooked":false},{"seatNumber":"D9","isBooked":false},{"seatNumber":"D10","isBooked":false},{"seatNumber":"D11","isBooked":false},{"seatNumber":"D12","isBooked":false},{"seatNumber":"D13","isBooked":false},{"seatNumber":"D14","isBooked":false},{"seatNumber":"D15","isBooked":false},{"seatNumber":"D16","isBooked":false},{"seatNumber":"D17","isBooked":false}]},
+            { "rowName": "C", "seats": [{"seatNumber":"C1","isBooked":false},{"seatNumber":"C2","isBooked":false},{"seatNumber":"C3","isBooked":false},{"seatNumber":"C4","isBooked":false},{"seatNumber":"C5","isBooked":false},{"seatNumber":"C6","isBooked":false},{"seatNumber":"C7","isBooked":false},{"seatNumber":"C8","isBooked":false},{"seatNumber":"C9","isBooked":false},{"seatNumber":"C10","isBooked":false},{"seatNumber":"C11","isBooked":false},{"seatNumber":"C12","isBooked":false},{"seatNumber":"C13","isBooked":false},{"seatNumber":"C14","isBooked":false},{"seatNumber":"C15","isBooked":false},{"seatNumber":"C16","isBooked":false},{"seatNumber":"C17","isBooked":false}]},
+            { "rowName": "B", "seats": [{"seatNumber":"B1","isBooked":false},{"seatNumber":"B2","isBooked":false},{"seatNumber":"B3","isBooked":false},{"seatNumber":"B4","isBooked":false},{"seatNumber":"B5","isBooked":false},{"seatNumber":"B6","isBooked":false},{"seatNumber":"B7","isBooked":false},{"seatNumber":"B8","isBooked":false},{"seatNumber":"B9","isBooked":false},{"seatNumber":"B10","isBooked":false},{"seatNumber":"B11","isBooked":false},{"seatNumber":"B12","isBooked":false},{"seatNumber":"B13","isBooked":false},{"seatNumber":"B14","isBooked":false},{"seatNumber":"B15","isBooked":false},{"seatNumber":"B16","isBooked":false},{"seatNumber":"B17","isBooked":false}]}
+          ]
+        },
+        {
+          "categoryName": "normal",
+          "price": 210,
+          "rows": [
+            { "rowName": "A", "seats": [{"seatNumber":"A1","isBooked":false},{"seatNumber":"A2","isBooked":false},{"seatNumber":"A3","isBooked":false},{"seatNumber":"A4","isBooked":false},{"seatNumber":"A5","isBooked":false},{"seatNumber":"A6","isBooked":false},{"seatNumber":"A7","isBooked":false},{"seatNumber":"A8","isBooked":false},{"seatNumber":"A9","isBooked":false},{"seatNumber":"A10","isBooked":false},{"seatNumber":"A11","isBooked":false},{"seatNumber":"A12","isBooked":false},{"seatNumber":"A13","isBooked":false},{"seatNumber":"A14","isBooked":false},{"seatNumber":"A15","isBooked":false}]}
+          ]
+        }
+      ]
+    },
+    {
+      "time": "7:30 PM",
+            "categories": [
+        {
+          "categoryName": "premium",
+          "price": 250,
+          "rows": [
+            { "rowName": "K", "seats": [{"seatNumber":"K1","isBooked":false},{"seatNumber":"K2","isBooked":false},{"seatNumber":"K3","isBooked":false},{"seatNumber":"K4","isBooked":false},{"seatNumber":"K5","isBooked":false},{"seatNumber":"K6","isBooked":false},{"seatNumber":"K7","isBooked":false},{"seatNumber":"K8","isBooked":false},{"seatNumber":"K9","isBooked":false},{"seatNumber":"K10","isBooked":false},{"seatNumber":"K11","isBooked":false},{"seatNumber":"K12","isBooked":false},{"seatNumber":"K13","isBooked":false},{"seatNumber":"K14","isBooked":false},{"seatNumber":"K15","isBooked":false},{"seatNumber":"K16","isBooked":false},{"seatNumber":"K17","isBooked":false},{"seatNumber":"K18","isBooked":false},{"seatNumber":"K19","isBooked":false},{"seatNumber":"K20","isBooked":false}]},
+            { "rowName": "J", "seats": [{"seatNumber":"J1","isBooked":false},{"seatNumber":"J2","isBooked":false},{"seatNumber":"J3","isBooked":false},{"seatNumber":"J4","isBooked":false},{"seatNumber":"J5","isBooked":false},{"seatNumber":"J6","isBooked":false},{"seatNumber":"J7","isBooked":false},{"seatNumber":"J8","isBooked":false},{"seatNumber":"J9","isBooked":false},{"seatNumber":"J10","isBooked":false},{"seatNumber":"J11","isBooked":false},{"seatNumber":"J12","isBooked":false},{"seatNumber":"J13","isBooked":false},{"seatNumber":"J14","isBooked":false},{"seatNumber":"J15","isBooked":false},{"seatNumber":"J16","isBooked":false},{"seatNumber":"J17","isBooked":false},{"seatNumber":"J18","isBooked":false},{"seatNumber":"J19","isBooked":false},{"seatNumber":"J20","isBooked":false}]},
+            { "rowName": "I", "seats": [{"seatNumber":"I1","isBooked":false},{"seatNumber":"I2","isBooked":false},{"seatNumber":"I3","isBooked":false},{"seatNumber":"I4","isBooked":false},{"seatNumber":"I5","isBooked":false},{"seatNumber":"I6","isBooked":false},{"seatNumber":"I7","isBooked":false},{"seatNumber":"I8","isBooked":false},{"seatNumber":"I9","isBooked":false},{"seatNumber":"I10","isBooked":false},{"seatNumber":"I11","isBooked":false},{"seatNumber":"I12","isBooked":false},{"seatNumber":"I13","isBooked":false},{"seatNumber":"I14","isBooked":false},{"seatNumber":"I15","isBooked":false},{"seatNumber":"I16","isBooked":false},{"seatNumber":"I17","isBooked":false},{"seatNumber":"I18","isBooked":false},{"seatNumber":"I19","isBooked":false},{"seatNumber":"I20","isBooked":false}]},
+            { "rowName": "H", "seats": [{"seatNumber":"H1","isBooked":false},{"seatNumber":"H2","isBooked":false},{"seatNumber":"H3","isBooked":false},{"seatNumber":"H4","isBooked":false},{"seatNumber":"H5","isBooked":false},{"seatNumber":"H6","isBooked":false},{"seatNumber":"H7","isBooked":false},{"seatNumber":"H8","isBooked":false},{"seatNumber":"H9","isBooked":false},{"seatNumber":"H10","isBooked":false},{"seatNumber":"H11","isBooked":false},{"seatNumber":"H12","isBooked":false},{"seatNumber":"H13","isBooked":false},{"seatNumber":"H14","isBooked":false},{"seatNumber":"H15","isBooked":false},{"seatNumber":"H16","isBooked":false},{"seatNumber":"H17","isBooked":false},{"seatNumber":"H18","isBooked":false},{"seatNumber":"H19","isBooked":false},{"seatNumber":"H20","isBooked":false}]},
+            { "rowName": "G", "seats": [{"seatNumber":"G1","isBooked":false},{"seatNumber":"G2","isBooked":false},{"seatNumber":"G3","isBooked":false},{"seatNumber":"G4","isBooked":false},{"seatNumber":"G5","isBooked":false},{"seatNumber":"G6","isBooked":false},{"seatNumber":"G7","isBooked":false},{"seatNumber":"G8","isBooked":false},{"seatNumber":"G9","isBooked":false},{"seatNumber":"G10","isBooked":false},{"seatNumber":"G11","isBooked":false},{"seatNumber":"G12","isBooked":false},{"seatNumber":"G13","isBooked":false},{"seatNumber":"G14","isBooked":false},{"seatNumber":"G15","isBooked":false},{"seatNumber":"G16","isBooked":false},{"seatNumber":"G17","isBooked":false},{"seatNumber":"G18","isBooked":false},{"seatNumber":"G19","isBooked":false},{"seatNumber":"G20","isBooked":false}]},
+            { "rowName": "F", "seats": [{"seatNumber":"F1","isBooked":false},{"seatNumber":"F2","isBooked":false},{"seatNumber":"F3","isBooked":false},{"seatNumber":"F4","isBooked":false},{"seatNumber":"F5","isBooked":false},{"seatNumber":"F6","isBooked":false},{"seatNumber":"F7","isBooked":false},{"seatNumber":"F8","isBooked":false},{"seatNumber":"F9","isBooked":false},{"seatNumber":"F10","isBooked":false},{"seatNumber":"F11","isBooked":false},{"seatNumber":"F12","isBooked":false},{"seatNumber":"F13","isBooked":false},{"seatNumber":"F14","isBooked":false},{"seatNumber":"F15","isBooked":false},{"seatNumber":"F16","isBooked":false},{"seatNumber":"F17","isBooked":false},{"seatNumber":"F18","isBooked":false},{"seatNumber":"F19","isBooked":false},{"seatNumber":"F20","isBooked":false}]},
+            { "rowName": "E", "seats": [{"seatNumber":"E1","isBooked":false},{"seatNumber":"E2","isBooked":false},{"seatNumber":"E3","isBooked":false},{"seatNumber":"E4","isBooked":false},{"seatNumber":"E5","isBooked":false},{"seatNumber":"E6","isBooked":false},{"seatNumber":"E7","isBooked":false},{"seatNumber":"E8","isBooked":false},{"seatNumber":"E9","isBooked":false},{"seatNumber":"E10","isBooked":false},{"seatNumber":"E11","isBooked":false},{"seatNumber":"E12","isBooked":false},{"seatNumber":"E13","isBooked":false},{"seatNumber":"E14","isBooked":false},{"seatNumber":"E15","isBooked":false},{"seatNumber":"E16","isBooked":false},{"seatNumber":"E17","isBooked":false},{"seatNumber":"E18","isBooked":false},{"seatNumber":"E19","isBooked":false},{"seatNumber":"E20","isBooked":false}]}
+          ]
+        },
+        {
+          "categoryName": "executive",
+          "price": 230,
+          "rows": [
+            { "rowName": "D", "seats": [{"seatNumber":"D1","isBooked":false},{"seatNumber":"D2","isBooked":false},{"seatNumber":"D3","isBooked":false},{"seatNumber":"D4","isBooked":false},{"seatNumber":"D5","isBooked":false},{"seatNumber":"D6","isBooked":false},{"seatNumber":"D7","isBooked":false},{"seatNumber":"D8","isBooked":false},{"seatNumber":"D9","isBooked":false},{"seatNumber":"D10","isBooked":false},{"seatNumber":"D11","isBooked":false},{"seatNumber":"D12","isBooked":false},{"seatNumber":"D13","isBooked":false},{"seatNumber":"D14","isBooked":false},{"seatNumber":"D15","isBooked":false},{"seatNumber":"D16","isBooked":false},{"seatNumber":"D17","isBooked":false}]},
+            { "rowName": "C", "seats": [{"seatNumber":"C1","isBooked":false},{"seatNumber":"C2","isBooked":false},{"seatNumber":"C3","isBooked":false},{"seatNumber":"C4","isBooked":false},{"seatNumber":"C5","isBooked":false},{"seatNumber":"C6","isBooked":false},{"seatNumber":"C7","isBooked":false},{"seatNumber":"C8","isBooked":false},{"seatNumber":"C9","isBooked":false},{"seatNumber":"C10","isBooked":false},{"seatNumber":"C11","isBooked":false},{"seatNumber":"C12","isBooked":false},{"seatNumber":"C13","isBooked":false},{"seatNumber":"C14","isBooked":false},{"seatNumber":"C15","isBooked":false},{"seatNumber":"C16","isBooked":false},{"seatNumber":"C17","isBooked":false}]},
+            { "rowName": "B", "seats": [{"seatNumber":"B1","isBooked":false},{"seatNumber":"B2","isBooked":false},{"seatNumber":"B3","isBooked":false},{"seatNumber":"B4","isBooked":false},{"seatNumber":"B5","isBooked":false},{"seatNumber":"B6","isBooked":false},{"seatNumber":"B7","isBooked":false},{"seatNumber":"B8","isBooked":false},{"seatNumber":"B9","isBooked":false},{"seatNumber":"B10","isBooked":false},{"seatNumber":"B11","isBooked":false},{"seatNumber":"B12","isBooked":false},{"seatNumber":"B13","isBooked":false},{"seatNumber":"B14","isBooked":false},{"seatNumber":"B15","isBooked":false},{"seatNumber":"B16","isBooked":false},{"seatNumber":"B17","isBooked":false}]}
+          ]
+        },
+        {
+          "categoryName": "normal",
+          "price": 210,
+          "rows": [
+            { "rowName": "A", "seats": [{"seatNumber":"A1","isBooked":false},{"seatNumber":"A2","isBooked":false},{"seatNumber":"A3","isBooked":false},{"seatNumber":"A4","isBooked":false},{"seatNumber":"A5","isBooked":false},{"seatNumber":"A6","isBooked":false},{"seatNumber":"A7","isBooked":false},{"seatNumber":"A8","isBooked":false},{"seatNumber":"A9","isBooked":false},{"seatNumber":"A10","isBooked":false},{"seatNumber":"A11","isBooked":false},{"seatNumber":"A12","isBooked":false},{"seatNumber":"A13","isBooked":false},{"seatNumber":"A14","isBooked":false},{"seatNumber":"A15","isBooked":false}]}
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+{
+  "movieId": "67056e5f85f3df5a19b3b99a",
+  "timeSlots": [
+    {
+      "time": "10:00 AM",
+      "categories": [
+        {
+          "categoryName": "premium",
+          "price": 250,
+          "rows": [
+            { "rowName": "K", "seats": [{"seatNumber":"K1","isBooked":false},{"seatNumber":"K2","isBooked":false},{"seatNumber":"K3","isBooked":false},{"seatNumber":"K4","isBooked":false},{"seatNumber":"K5","isBooked":false},{"seatNumber":"K6","isBooked":false},{"seatNumber":"K7","isBooked":false},{"seatNumber":"K8","isBooked":false},{"seatNumber":"K9","isBooked":false},{"seatNumber":"K10","isBooked":false},{"seatNumber":"K11","isBooked":false},{"seatNumber":"K12","isBooked":false},{"seatNumber":"K13","isBooked":false},{"seatNumber":"K14","isBooked":false},{"seatNumber":"K15","isBooked":false},{"seatNumber":"K16","isBooked":false},{"seatNumber":"K17","isBooked":false},{"seatNumber":"K18","isBooked":false},{"seatNumber":"K19","isBooked":false},{"seatNumber":"K20","isBooked":false}]},
+            { "rowName": "J", "seats": [{"seatNumber":"J1","isBooked":false},{"seatNumber":"J2","isBooked":false},{"seatNumber":"J3","isBooked":false},{"seatNumber":"J4","isBooked":false},{"seatNumber":"J5","isBooked":false},{"seatNumber":"J6","isBooked":false},{"seatNumber":"J7","isBooked":false},{"seatNumber":"J8","isBooked":false},{"seatNumber":"J9","isBooked":false},{"seatNumber":"J10","isBooked":false},{"seatNumber":"J11","isBooked":false},{"seatNumber":"J12","isBooked":false},{"seatNumber":"J13","isBooked":false},{"seatNumber":"J14","isBooked":false},{"seatNumber":"J15","isBooked":false},{"seatNumber":"J16","isBooked":false},{"seatNumber":"J17","isBooked":false},{"seatNumber":"J18","isBooked":false},{"seatNumber":"J19","isBooked":false},{"seatNumber":"J20","isBooked":false}]},
+            { "rowName": "I", "seats": [{"seatNumber":"I1","isBooked":false},{"seatNumber":"I2","isBooked":false},{"seatNumber":"I3","isBooked":false},{"seatNumber":"I4","isBooked":false},{"seatNumber":"I5","isBooked":false},{"seatNumber":"I6","isBooked":false},{"seatNumber":"I7","isBooked":false},{"seatNumber":"I8","isBooked":false},{"seatNumber":"I9","isBooked":false},{"seatNumber":"I10","isBooked":false},{"seatNumber":"I11","isBooked":false},{"seatNumber":"I12","isBooked":false},{"seatNumber":"I13","isBooked":false},{"seatNumber":"I14","isBooked":false},{"seatNumber":"I15","isBooked":false},{"seatNumber":"I16","isBooked":false},{"seatNumber":"I17","isBooked":false},{"seatNumber":"I18","isBooked":false},{"seatNumber":"I19","isBooked":false},{"seatNumber":"I20","isBooked":false}]},
+            { "rowName": "H", "seats": [{"seatNumber":"H1","isBooked":false},{"seatNumber":"H2","isBooked":false},{"seatNumber":"H3","isBooked":false},{"seatNumber":"H4","isBooked":false},{"seatNumber":"H5","isBooked":false},{"seatNumber":"H6","isBooked":false},{"seatNumber":"H7","isBooked":false},{"seatNumber":"H8","isBooked":false},{"seatNumber":"H9","isBooked":false},{"seatNumber":"H10","isBooked":false},{"seatNumber":"H11","isBooked":false},{"seatNumber":"H12","isBooked":false},{"seatNumber":"H13","isBooked":false},{"seatNumber":"H14","isBooked":false},{"seatNumber":"H15","isBooked":false},{"seatNumber":"H16","isBooked":false},{"seatNumber":"H17","isBooked":false},{"seatNumber":"H18","isBooked":false},{"seatNumber":"H19","isBooked":false},{"seatNumber":"H20","isBooked":false}]},
+            { "rowName": "G", "seats": [{"seatNumber":"G1","isBooked":false},{"seatNumber":"G2","isBooked":false},{"seatNumber":"G3","isBooked":false},{"seatNumber":"G4","isBooked":false},{"seatNumber":"G5","isBooked":false},{"seatNumber":"G6","isBooked":false},{"seatNumber":"G7","isBooked":false},{"seatNumber":"G8","isBooked":false},{"seatNumber":"G9","isBooked":false},{"seatNumber":"G10","isBooked":false},{"seatNumber":"G11","isBooked":false},{"seatNumber":"G12","isBooked":false},{"seatNumber":"G13","isBooked":false},{"seatNumber":"G14","isBooked":false},{"seatNumber":"G15","isBooked":false},{"seatNumber":"G16","isBooked":false},{"seatNumber":"G17","isBooked":false},{"seatNumber":"G18","isBooked":false},{"seatNumber":"G19","isBooked":false},{"seatNumber":"G20","isBooked":false}]},
+            { "rowName": "F", "seats": [{"seatNumber":"F1","isBooked":false},{"seatNumber":"F2","isBooked":false},{"seatNumber":"F3","isBooked":false},{"seatNumber":"F4","isBooked":false},{"seatNumber":"F5","isBooked":false},{"seatNumber":"F6","isBooked":false},{"seatNumber":"F7","isBooked":false},{"seatNumber":"F8","isBooked":false},{"seatNumber":"F9","isBooked":false},{"seatNumber":"F10","isBooked":false},{"seatNumber":"F11","isBooked":false},{"seatNumber":"F12","isBooked":false},{"seatNumber":"F13","isBooked":false},{"seatNumber":"F14","isBooked":false},{"seatNumber":"F15","isBooked":false},{"seatNumber":"F16","isBooked":false},{"seatNumber":"F17","isBooked":false},{"seatNumber":"F18","isBooked":false},{"seatNumber":"F19","isBooked":false},{"seatNumber":"F20","isBooked":false}]},
+            { "rowName": "E", "seats": [{"seatNumber":"E1","isBooked":false},{"seatNumber":"E2","isBooked":false},{"seatNumber":"E3","isBooked":false},{"seatNumber":"E4","isBooked":false},{"seatNumber":"E5","isBooked":false},{"seatNumber":"E6","isBooked":false},{"seatNumber":"E7","isBooked":false},{"seatNumber":"E8","isBooked":false},{"seatNumber":"E9","isBooked":false},{"seatNumber":"E10","isBooked":false},{"seatNumber":"E11","isBooked":false},{"seatNumber":"E12","isBooked":false},{"seatNumber":"E13","isBooked":false},{"seatNumber":"E14","isBooked":false},{"seatNumber":"E15","isBooked":false},{"seatNumber":"E16","isBooked":false},{"seatNumber":"E17","isBooked":false},{"seatNumber":"E18","isBooked":false},{"seatNumber":"E19","isBooked":false},{"seatNumber":"E20","isBooked":false}]}
+          ]
+        },
+        {
+          "categoryName": "executive",
+          "price": 230,
+          "rows": [
+            { "rowName": "D", "seats": [{"seatNumber":"D1","isBooked":false},{"seatNumber":"D2","isBooked":false},{"seatNumber":"D3","isBooked":false},{"seatNumber":"D4","isBooked":false},{"seatNumber":"D5","isBooked":false},{"seatNumber":"D6","isBooked":false},{"seatNumber":"D7","isBooked":false},{"seatNumber":"D8","isBooked":false},{"seatNumber":"D9","isBooked":false},{"seatNumber":"D10","isBooked":false},{"seatNumber":"D11","isBooked":false},{"seatNumber":"D12","isBooked":false},{"seatNumber":"D13","isBooked":false},{"seatNumber":"D14","isBooked":false},{"seatNumber":"D15","isBooked":false},{"seatNumber":"D16","isBooked":false},{"seatNumber":"D17","isBooked":false}]},
+            { "rowName": "C", "seats": [{"seatNumber":"C1","isBooked":false},{"seatNumber":"C2","isBooked":false},{"seatNumber":"C3","isBooked":false},{"seatNumber":"C4","isBooked":false},{"seatNumber":"C5","isBooked":false},{"seatNumber":"C6","isBooked":false},{"seatNumber":"C7","isBooked":false},{"seatNumber":"C8","isBooked":false},{"seatNumber":"C9","isBooked":false},{"seatNumber":"C10","isBooked":false},{"seatNumber":"C11","isBooked":false},{"seatNumber":"C12","isBooked":false},{"seatNumber":"C13","isBooked":false},{"seatNumber":"C14","isBooked":false},{"seatNumber":"C15","isBooked":false},{"seatNumber":"C16","isBooked":false},{"seatNumber":"C17","isBooked":false}]},
+            { "rowName": "B", "seats": [{"seatNumber":"B1","isBooked":false},{"seatNumber":"B2","isBooked":false},{"seatNumber":"B3","isBooked":false},{"seatNumber":"B4","isBooked":false},{"seatNumber":"B5","isBooked":false},{"seatNumber":"B6","isBooked":false},{"seatNumber":"B7","isBooked":false},{"seatNumber":"B8","isBooked":false},{"seatNumber":"B9","isBooked":false},{"seatNumber":"B10","isBooked":false},{"seatNumber":"B11","isBooked":false},{"seatNumber":"B12","isBooked":false},{"seatNumber":"B13","isBooked":false},{"seatNumber":"B14","isBooked":false},{"seatNumber":"B15","isBooked":false},{"seatNumber":"B16","isBooked":false},{"seatNumber":"B17","isBooked":false}]}
+          ]
+        },
+        {
+          "categoryName": "normal",
+          "price": 210,
+          "rows": [
+            { "rowName": "A", "seats": [{"seatNumber":"A1","isBooked":false},{"seatNumber":"A2","isBooked":false},{"seatNumber":"A3","isBooked":false},{"seatNumber":"A4","isBooked":false},{"seatNumber":"A5","isBooked":false},{"seatNumber":"A6","isBooked":false},{"seatNumber":"A7","isBooked":false},{"seatNumber":"A8","isBooked":false},{"seatNumber":"A9","isBooked":false},{"seatNumber":"A10","isBooked":false},{"seatNumber":"A11","isBooked":false},{"seatNumber":"A12","isBooked":false},{"seatNumber":"A13","isBooked":false},{"seatNumber":"A14","isBooked":false},{"seatNumber":"A15","isBooked":false}]}
+          ]
+        }
+      ]
+    },
+    {
+      "time": "2:00 PM",
+      "categories": [
+        // same structure as 10:00 AM
+      ]
+    },
+    {
+      "time": "7:30 PM",
+      "categories": [
+        // same structure as 10:00 AM
+      ]
+    }
+  ]
+}
+
