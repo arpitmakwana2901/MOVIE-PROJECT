@@ -18,7 +18,7 @@ const seatBookingSchema = mongoose.Schema(
     },
     seats: [
       {
-        type: String, // seatNumber e.g., "A1", "B5"
+        type: String,
         required: true,
       },
     ],

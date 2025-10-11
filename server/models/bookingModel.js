@@ -14,7 +14,7 @@ const bookingSchema = new mongoose.Schema(
     },
     selectedDate: {
       type: String, // e.g. "2025-10-09"
-      required: true,
+       required: true,
     },
     status: {
       type: String,

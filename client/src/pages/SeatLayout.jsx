@@ -8,28 +8,26 @@ import { useAuth } from "../components/context/AuthContext";
 
 const SeatLayout = () => {
   const { id } = useParams();
-  console.log(id, "FRONTEND_ID");
+  console.log(id, "movie");
   const navigate = useNavigate();
-
-
-  const [selectedSeats, setSelectedSeats] = useState([]);
-  const [selectedTime, setSelectedTime] = useState(null);
-  const [layoutData, setLayoutData] = useState(null);
-  const [loading, setLoading] = useState(true);
   const { token } = useAuth();
-  console.log(token, "TOKEN");
-  // ✅ Backend se seat layout fetch karne ka function
+
+  const [layoutData, setLayoutData] = useState(null);
+  const [selectedTime, setSelectedTime] = useState(null);
+  const [selectedSeats, setSelectedSeats] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // ✅ Fetch seat layout from backend
   const fetchSeatLayout = async () => {
     try {
       const res = await axios.get(`http://localhost:3690/seat-layout/${id}`);
       if (res.data.success) {
-        console.log(res.data);
         setLayoutData(res.data.data);
       } else {
         toast.error(res.data.message || "Failed to fetch layout");
       }
     } catch (error) {
-      console.error("Error fetching layout:", error);
+      console.error(error);
       toast.error("Error fetching layout");
     } finally {
       setLoading(false);
@@ -40,13 +38,20 @@ const SeatLayout = () => {
     fetchSeatLayout();
   }, [id]);
 
+  // ✅ Jab time change ho, selected seats clear ho jayein
+  useEffect(() => {
+    setSelectedSeats([]);
+  }, [selectedTime]);
+
+  // ✅ Checkout handler
   const handleCheckout = async () => {
     if (!selectedTime) {
       toast.error("Please select a time");
       return;
     }
+
     if (selectedSeats.length === 0) {
-      toast.error("Please select at least one seat");
+      toast.error("Select at least one seat");
       return;
     }
 
@@ -64,18 +69,16 @@ const SeatLayout = () => {
           time: selectedTime.time,
           seats: selectedSeats,
         },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        { headers: { Authorization: `Bearer ${token}` } }
       );
 
       if (res.data.success) {
+        console.log(res.data);
         toast.success(res.data.message);
         setSelectedSeats([]);
         setSelectedTime(null);
-        navigate("/my-bookings");
+        await fetchSeatLayout(); // ✅ Refresh layout - booked seats ab grey dikhenge
+        setTimeout(() => navigate("/my-bookings"), 1000);
       } else {
         toast.error(res.data.message);
       }
@@ -85,20 +88,65 @@ const SeatLayout = () => {
     }
   };
 
+  // ✅ Seat select handler
+  const handleSeatSelect = (seatId) => {
+    if (!selectedTime) {
+      toast.error("Please select a time first");
+      return;
+    }
+
+    // Check if seat is already booked in current time slot
+    const isSeatBooked = checkIfSeatBooked(seatId);
+    if (isSeatBooked) {
+      toast.error("This seat is already booked");
+      return;
+    }
+
+    const alreadySelected = selectedSeats.includes(seatId);
+
+    if (!alreadySelected && selectedSeats.length >= 5) {
+      toast.error("Maximum 5 seats allowed");
+      return;
+    }
+
+    setSelectedSeats((prev) =>
+      alreadySelected ? prev.filter((s) => s !== seatId) : [...prev, seatId]
+    );
+  };
+
+  // ✅ Helper function: Check if seat is booked in selected time
+  const checkIfSeatBooked = (seatId) => {
+    if (!layoutData || !selectedTime) return false;
+
+    const [categoryName, rowName, seatNumber] = seatId.split("-");
+
+    const timeSlot = layoutData.timeSlots.find(
+      (t) => t.time === selectedTime.time
+    );
+    if (!timeSlot) return false;
+
+    const category = timeSlot.categories.find(
+      (cat) => cat.categoryName === categoryName
+    );
+    if (!category) return false;
+
+    const row = category.rows.find((r) => r.rowName === rowName);
+    if (!row) return false;
+
+    const seat = row.seats.find((s) => s.seatNumber === seatNumber);
+    return seat ? seat.isBooked : false;
+  };
+
   if (loading) return <div className="text-white px-6 py-12">Loading...</div>;
   if (!layoutData)
     return <div className="text-white px-6 py-12">No layout found</div>;
 
-  // Backend se data ko map karne ke liye
+  // Map backend data into sections for rendering
   const seatRows = {};
   layoutData.timeSlots.forEach((slot) => {
     slot.categories.forEach((cat) => {
-      if (!seatRows[cat.categoryName]) {
-        seatRows[cat.categoryName] = {
-          price: cat.price,
-          rows: cat.rows,
-        };
-      }
+      if (!seatRows[cat.categoryName])
+        seatRows[cat.categoryName] = { price: cat.price, rows: cat.rows };
     });
   });
 
@@ -112,62 +160,37 @@ const SeatLayout = () => {
           <div key={row.rowName} className="flex gap-2 items-center">
             <span className="text-xs text-gray-400 w-4">{row.rowName}</span>
             {row.seats.map((seat) => {
-              const seatId = seat.seatNumber;
+              const seatId = `${sectionKey}-${row.rowName}-${seat.seatNumber}`;
               const isSelected = selectedSeats.includes(seatId);
+              const isSold = checkIfSeatBooked(seatId);
+              const isBestseller = seat.isBestseller;
 
               let className =
-                "w-6 h-6 rounded-sm flex items-center justify-center border text-xs cursor-pointer";
+                "w-6 h-6 rounded-sm flex items-center justify-center border text-xs cursor-pointer transition-all";
 
-              // 1️⃣ Sold seats
-              if (seat.isBooked) {
-                className += " bg-gray-300 cursor-not-allowed ";
-              }
-              // 2️⃣ Selected by user
-              else if (selectedSeats.includes(seat.seatNumber)) {
-                className += " bg-green-700 text-white";
-              }
-              // 3️⃣ Default available
-              else {
-                className += " border-gray-500 text-gray-500";
+              if (isSold) {
+                className += " bg-gray-300 cursor-not-allowed";
+              } else if (!selectedTime) {
+                className +=
+                  " border-gray-600 text-gray-600 cursor-not-allowed";
+              } else if (isSelected) {
+                className += " bg-green-700 text-white border-green-700";
+              } else if (isBestseller) {
+                className +=
+                  " border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-white";
+              } else {
+                className +=
+                  " border-green-500 text-green-500 hover:bg-green-500 hover:text-white";
               }
 
               return (
                 <div
                   key={seatId}
                   className={className}
-                  onClick={() => {
-                    if (seat.isBooked) return;
-                    if (!selectedTime) {
-                      toast.custom(
-                        (t) => (
-                          <div
-                            className={`bg-red-600 text-white px-3 py-1 rounded shadow-md text-sm transition-all duration-300 ${
-                              t.visible ? "opacity-100" : "opacity-0"
-                            }`}
-                          >
-                            Please select a time
-                          </div>
-                        ),
-                        { duration: 2000 }
-                      );
-                      return;
-                    }
-
-                    const isAlreadySelected = selectedSeats.includes(seatId);
-
-                    if (!isAlreadySelected && selectedSeats.length >= 5) {
-                      toast.error("Maximum 5 seats are selected");
-                      return;
-                    }
-
-                    setSelectedSeats((prev) =>
-                      isAlreadySelected
-                        ? prev.filter((s) => s !== seatId)
-                        : [...prev, seatId]
-                    );
-                  }}
+                  onClick={() => handleSeatSelect(seatId)}
+                  title={isSold ? "Already Booked" : `Seat ${seat.seatNumber}`}
                 >
-                  {seat.seatNumber.replace(/[A-Z]+-/, "")}
+                  {seat.seatNumber}
                 </div>
               );
             })}
@@ -189,7 +212,7 @@ const SeatLayout = () => {
             <div
               key={`${slot.time}-${index}`}
               onClick={() => setSelectedTime(slot)}
-              className={`flex items-center gap-2 px-6 py-2 w-max rounded-r-md cursor-pointer transition ${
+              className={`flex items-center gap-2 px-6 py-2 w-full rounded-r-md cursor-pointer transition ${
                 selectedTime?.time === slot.time
                   ? "bg-primary text-white"
                   : "hover:bg-[#3a1a1a] text-white"
@@ -206,11 +229,18 @@ const SeatLayout = () => {
       <div className="flex-1 flex flex-col items-center max-md:mt-16 relative">
         <BlurCircle top="-100px" left="-100px" />
         <BlurCircle bottom="0" right="0" />
+
         <h1 className="text-2xl font-semibold mb-4">Select your seat</h1>
+
+        {selectedTime && (
+          <p className="text-green-500 font-medium mb-4 text-sm">
+            Selected Time: {selectedTime.time}
+          </p>
+        )}
 
         {!selectedTime && (
           <p className="text-red-500 font-medium mb-4 text-sm">
-            Please select a time
+            Please select a time to choose seats
           </p>
         )}
 
@@ -218,13 +248,15 @@ const SeatLayout = () => {
           renderSeats(key, section)
         )}
 
-        <div className="mt-6">
-          <p className="text-gray-400 text-sm text-center mt-2">SCREEN SIDE</p>
+        {/* Screen */}
+        <div className="mt-6 w-3/4 bg-gray-400 h-2 rounded-lg flex items-center justify-center">
+          <p className="text-gray-800 text-xs font-bold">SCREEN</p>
         </div>
 
+        {/* Legend */}
         <div className="flex items-center gap-4 mt-8 text-sm flex-wrap justify-center">
           <div className="flex items-center gap-1">
-            <div className="w-4 h-4 border border-green-500"></div>
+            <div className="w-4 h-4 border border-green-500 bg-green-500"></div>
             <span className="text-green-500">Available</span>
           </div>
           <div className="flex items-center gap-1">
@@ -235,12 +267,44 @@ const SeatLayout = () => {
             <div className="w-4 h-4 bg-gray-300"></div>
             <span className="text-gray-300">Sold</span>
           </div>
+          <div className="flex items-center gap-1">
+            <div className="w-4 h-4 border border-yellow-500"></div>
+            <span className="text-yellow-500">Bestseller</span>
+          </div>
         </div>
+
+        {/* Checkout Button */}
+        {selectedSeats.length > 0 && (
+          <div className="mt-6 p-4 bg-[#2a0f0f] rounded-lg">
+            <p className="text-sm text-gray-300">
+              Selected Seats:{" "}
+              <span className="text-white font-semibold">
+                {selectedSeats.join(", ")}
+              </span>
+            </p>
+            <p className="text-sm text-gray-300 mt-1">
+              Total Amount:{" "}
+              <span className="text-white font-semibold">
+                ₹
+                {selectedSeats.reduce((total, seatId) => {
+                  const [categoryName] = seatId.split("-");
+                  const section = seatRows[categoryName];
+                  return total + (section?.price || 0);
+                }, 0)}
+              </span>
+            </p>
+          </div>
+        )}
 
         <div className="w-full flex justify-center mt-10">
           <button
             onClick={handleCheckout}
-            className="flex items-center gap-2 px-8 py-3 bg-[#e64949] hover:bg-[#d13c3c] transition rounded-full font-semibold text-white text-sm shadow-md active:scale-95"
+            disabled={!selectedTime || selectedSeats.length === 0}
+            className={`flex items-center gap-2 px-8 py-3 transition rounded-full font-semibold text-white text-sm shadow-md active:scale-95 ${
+              selectedTime && selectedSeats.length > 0
+                ? "bg-[#e64949] hover:bg-[#d13c3c] cursor-pointer"
+                : "bg-gray-600 cursor-not-allowed"
+            }`}
           >
             Proceed to Checkout
             <ArrowRightIcon strokeWidth={2.5} className="w-4 h-4" />
