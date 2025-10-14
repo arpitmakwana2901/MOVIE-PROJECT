@@ -11,8 +11,7 @@ const Movies = () => {
       try {
         const res = await axios.get("http://localhost:3690/shows/getShows");
         console.log(res.data.data, "response");
-
-        setMovies(res.data.data || []); // ✅ fallback to empty array
+        setMovies(res.data.data || []); // fallback to empty array
       } catch (err) {
         console.error("Error fetching movies:", err);
         setMovies([]); // fallback in case of error
@@ -22,7 +21,7 @@ const Movies = () => {
     fetchMovies();
   }, []);
 
-  return movies && movies.length > 0 ? (
+  return movies.length > 0 ? (
     <div className="relative my-40 mb-60 px-6 md:px-16 lg:px-40 xl:px-44 overflow-hidden min-h-[80vh]">
       <BlurCircle top="150px" left="0px" />
       <BlurCircle bottom="50px" right="50px" />

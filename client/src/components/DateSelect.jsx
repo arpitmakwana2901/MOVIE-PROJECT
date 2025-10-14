@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
-import BlurCircle from "./BlurCircle";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { useAuth } from "./context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import BlurCircle from "./BlurCircle";
 
 const DateSelect = ({ dateTime, movieId }) => {
   const [selected, setSelected] = useState(null);
@@ -24,7 +24,7 @@ const DateSelect = ({ dateTime, movieId }) => {
     try {
       const res = await axios.post(
         "http://localhost:3690/book-ticket",
-        { movieId, selectedDate: selected }, // ✅ no userId
+        { movieId, selectedDate: selected },
         { headers: { Authorization: `Bearer ${token}` } }
       );
       console.log(res.data.message);
@@ -37,32 +37,27 @@ const DateSelect = ({ dateTime, movieId }) => {
   };
 
   return (
-    <div id="dateSelect" className="px-6 md:px-16 lg:px-40 pt-6">
-      <div className="flex w-full flex-col md:flex-row items-center justify-between gap-10 relative p-8 bg-primary/10 border border-primary/20 rounded-lg">
+    <div id="dateSelect" className="flex items-center ">
+      <div className="flex flex-col md:flex-row items-center justify-between gap-10 relative p-8 bg-primary/10 border border-primary/20 rounded-lg">
         <BlurCircle top="-100px" left="-100px" />
         <BlurCircle top="100px" right="0px" />
-
         <div>
-          <p className="text-lg font-semibold text-white">Choose Date</p>
+          <p className="text-lg font-semibold">Choose Date</p>
           <div className="flex items-center gap-6 text-sm mt-5">
-            <ChevronLeftIcon
-              width={28}
-              className="text-gray-400 cursor-pointer"
-            />
-
+            <ChevronLeftIcon width={28} />
             <span className="grid grid-cols-3 md:flex flex-wrap md:max-w-lg gap-4">
               {Object.keys(dateTime).map((date) => (
                 <button
-                  key={date}
                   onClick={() => setSelected(date)}
-                  className={`flex flex-col items-center justify-center h-14 w-14 aspect-square rounded-md transition-all ${
+                  key={date}
+                  className={`flex flex-col items-center justify-center h-14 w-14 aspect-square rounded cursor-pointer ${
                     selected === date
                       ? "bg-primary text-white"
-                      : "border border-gray-500 text-gray-300"
+                      : "border border-primary/70"
                   }`}
                 >
                   <span>{new Date(date).getDate()}</span>
-                  <span className="text-xs">
+                  <span>
                     {new Date(date).toLocaleDateString("en-US", {
                       month: "short",
                     })}
@@ -70,22 +65,15 @@ const DateSelect = ({ dateTime, movieId }) => {
                 </button>
               ))}
             </span>
-
-            <ChevronRightIcon
-              width={28}
-              className="text-gray-400 cursor-pointer"
-            />
+            <ChevronRightIcon width={28} />
           </div>
         </div>
-
-        <div className="flex items-center justify-end w-30 md:w-auto">
-          <button
-            onClick={onBookHandler}
-            className="bg-primary text-white px-8 py-2 mt-6 md:mt-0 rounded hover:bg-primary/90 transition-all cursor-pointer"
-          >
-            Book Now
-          </button>
-        </div>
+        <button
+          onClick={onBookHandler}
+          className="bg-primary text-white px-8 py-2 mt-6 rounded hover:bg-primary/90 transition-all cursor-pointer"
+        >
+          Book Now
+        </button>
       </div>
     </div>
   );

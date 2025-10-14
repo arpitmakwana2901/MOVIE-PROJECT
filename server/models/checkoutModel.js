@@ -51,6 +51,13 @@ const checkoutSchema = mongoose.Schema(
       type: String,
       default: "pending",
     },
+    paymentDate: {
+      type: Date,
+    },
+    paymentId: {
+      type: String,
+      default: null,
+    },
   },
   { timestamps: true }
 );

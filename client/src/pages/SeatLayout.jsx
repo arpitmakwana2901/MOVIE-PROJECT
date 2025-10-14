@@ -16,12 +16,23 @@ const SeatLayout = () => {
   const [selectedTime, setSelectedTime] = useState(null);
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [moviesData, setMoviesData] = useState([]);
 
-  // ✅ Fetch seat layout from backend
+  const fetchMoviesData = async () => {
+    try {
+      const res = await axios.get("http://localhost:3690/shows/getShows");
+      setMoviesData(res.data.data || []);
+    } catch (err) {
+      console.error("Error fetching movies:", err);
+      setMoviesData([]);
+    }
+  };
+
   const fetchSeatLayout = async () => {
     try {
       const res = await axios.get(`http://localhost:3690/seat-layout/${id}`);
       if (res.data.success) {
+        console.log(res.data);
         setLayoutData(res.data.data);
       } else {
         toast.error(res.data.message || "Failed to fetch layout");
@@ -36,14 +47,13 @@ const SeatLayout = () => {
 
   useEffect(() => {
     fetchSeatLayout();
+    fetchMoviesData();
   }, [id]);
 
-  // ✅ Jab time change ho, selected seats clear ho jayein
   useEffect(() => {
     setSelectedSeats([]);
   }, [selectedTime]);
 
-  // ✅ Checkout handler
   const handleCheckout = async () => {
     if (!selectedTime) {
       toast.error("Please select a time");
@@ -59,6 +69,7 @@ const SeatLayout = () => {
       const token = localStorage.getItem("token");
       if (!token) {
         toast.error("Login required");
+        navigate("/login");
         return;
       }
 
@@ -73,29 +84,55 @@ const SeatLayout = () => {
       );
 
       if (res.data.success) {
-        console.log(res.data);
-        toast.success(res.data.message);
-        setSelectedSeats([]);
-        setSelectedTime(null);
-        await fetchSeatLayout(); // ✅ Refresh layout - booked seats ab grey dikhenge
-        setTimeout(() => navigate("/my-bookings"), 1000);
+        toast.success("Booking successful! Redirecting...");
+
+        const currentMovie = moviesData.find((movie) => movie._id === id);
+
+        const bookingData = {
+          _id: res.data.booking?._id || Date.now().toString(),
+          movieId: id,
+          movieTitle: currentMovie?.title || layoutData?.movieTitle || "Movie",
+          poster_path:
+            currentMovie?.backdrop_path ||
+            currentMovie?.poster_path ||
+            layoutData?.poster_path ||
+            "",
+          backdrop_path: currentMovie?.backdrop_path || "",
+          runtime: currentMovie?.runtime || layoutData?.runtime || 120,
+          genres: currentMovie?.genres || [],
+          time: selectedTime.time,
+          seats: selectedSeats,
+          totalAmount: selectedSeats.reduce((total, seatId) => {
+            const [categoryName] = seatId.split("-");
+            const section = seatRows[categoryName];
+            return total + (section?.price || 0);
+          }, 0),
+          showDate: new Date(),
+          isPaid: false,
+        };
+
+        navigate("/my-bookings", {
+          state: {
+            latestBooking: bookingData,
+            success: true,
+            message: "Booking successful!",
+          },
+        });
       } else {
         toast.error(res.data.message);
       }
     } catch (error) {
-      console.error(error);
+      console.error("❌ Booking error:", error);
       toast.error(error.response?.data?.message || "Booking failed");
     }
   };
 
-  // ✅ Seat select handler
   const handleSeatSelect = (seatId) => {
     if (!selectedTime) {
       toast.error("Please select a time first");
       return;
     }
 
-    // Check if seat is already booked in current time slot
     const isSeatBooked = checkIfSeatBooked(seatId);
     if (isSeatBooked) {
       toast.error("This seat is already booked");
@@ -114,7 +151,6 @@ const SeatLayout = () => {
     );
   };
 
-  // ✅ Helper function: Check if seat is booked in selected time
   const checkIfSeatBooked = (seatId) => {
     if (!layoutData || !selectedTime) return false;
 
@@ -141,7 +177,6 @@ const SeatLayout = () => {
   if (!layoutData)
     return <div className="text-white px-6 py-12">No layout found</div>;
 
-  // Map backend data into sections for rendering
   const seatRows = {};
   layoutData.timeSlots.forEach((slot) => {
     slot.categories.forEach((cat) => {

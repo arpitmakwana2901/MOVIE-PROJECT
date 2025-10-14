@@ -41,7 +41,7 @@ seatLayoutRoutes.get("/:movieId", async (req, res) => {
     const layout = await SeatLayoutModel.findOne({
       movieId: movieId,
     });
-    // console.log(movieId, "FETCH-MOVIEID");
+    console.log(movieId, "FETCH-MOVIEID");
     // console.log(layout, "FETCH_LAYOUT");
     if (!layout) {
       return res.status(404).json({

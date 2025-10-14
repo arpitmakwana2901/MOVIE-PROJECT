@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { assets } from "../../assets/assets";
 import BlurCircle from "../components/BlurCircle";
 import timeFormat from "./../lib/timeFormat";
@@ -10,8 +11,20 @@ const MyBookings = () => {
   const currency = import.meta.env.VITE_CURRENCY;
   const [bookings, setBookings] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [moviesData, setMoviesData] = useState([]);
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  // ✅ Fetch user bookings from backend
+  const fetchMoviesData = async () => {
+    try {
+      const res = await axios.get("http://localhost:3690/shows/getShows");
+      setMoviesData(res.data.data || []);
+    } catch (err) {
+      console.error("Error fetching movies:", err);
+      setMoviesData([]);
+    }
+  };
+
   const getMyBookings = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -20,12 +33,30 @@ const MyBookings = () => {
         return;
       }
 
+      await fetchMoviesData();
+
+      if (location.state?.latestBooking) {
+        const mergedBooking = mergeWithMovieData(location.state.latestBooking);
+        setBookings([mergedBooking]);
+        setIsLoading(false);
+
+        if (location.state.success) {
+          toast.success(
+            location.state.message || "Booking confirmed successfully!"
+          );
+        }
+        return;
+      }
+
       const res = await axios.get("http://localhost:3690/checkout", {
         headers: { Authorization: `Bearer ${token}` },
       });
 
       if (res.data.success) {
-        setBookings(res.data.data);
+        const mergedBookings = res.data.data.map((booking) =>
+          mergeWithMovieData(booking)
+        );
+        setBookings(mergedBookings);
       } else {
         toast.error(res.data.message || "Failed to fetch bookings");
       }
@@ -37,9 +68,41 @@ const MyBookings = () => {
     }
   };
 
+  const mergeWithMovieData = (booking) => {
+    const matchedMovie = moviesData.find(
+      (movie) =>
+        movie._id === booking.movieId || movie.title === booking.movieTitle
+    );
+
+    return {
+      ...booking,
+      movieTitle: matchedMovie?.title || booking.movieTitle,
+      poster_path:
+        matchedMovie?.backdrop_path ||
+        matchedMovie?.poster_path ||
+        booking.poster_path,
+      backdrop_path: matchedMovie?.backdrop_path || booking.backdrop_path,
+      runtime: matchedMovie?.runtime || booking.runtime,
+      genres: matchedMovie?.genres || booking.genres,
+      release_date: matchedMovie?.release_date || booking.release_date,
+      vote_average: matchedMovie?.vote_average || booking.vote_average,
+      time: booking.time,
+      seats: booking.seats,
+      totalAmount: booking.totalAmount,
+      showDate: booking.showDate,
+      isPaid: booking.isPaid,
+      _id: booking._id,
+    };
+  };
+
   useEffect(() => {
     getMyBookings();
-  }, []);
+  }, [location.state]);
+
+  const showAllBookings = () => {
+    navigate("/my-bookings", { replace: true });
+    window.location.reload();
+  };
 
   return (
     <div className="relative px-6 md:px-16 lg:px-40 pt-30 md:pt-40 min-h-[80vh]">
@@ -48,7 +111,29 @@ const MyBookings = () => {
       <div>
         <BlurCircle bottom="0px" left="600px" />
       </div>
-      <h1 className="text-lg font-semibold mb-4">My Bookings</h1>
+
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-lg font-semibold">
+          {location.state?.latestBooking
+            ? "Your Latest Booking"
+            : "My Bookings"}
+        </h1>
+
+        {/* {location.state?.latestBooking && (
+          <button
+            onClick={showAllBookings}
+            className="text-sm bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-full transition"
+          >
+            Show All Bookings
+          </button>
+        )} */}
+      </div>
+
+      {isLoading && (
+        <div className="text-center text-gray-400 mt-10">
+          <p>Loading your bookings...</p>
+        </div>
+      )}
 
       {!isLoading && bookings.length === 0 && (
         <div className="text-center text-gray-400 mt-10">
@@ -64,7 +149,11 @@ const MyBookings = () => {
         >
           <div className="flex flex-col md:flex-row">
             <img
-              src={item.poster_path}
+              src={
+                item.poster_path ||
+                item.moviePoster ||
+                assets.poster_placeholder
+              }
               alt={item.movieTitle}
               className="md:max-w-45 aspect-video h-auto object-cover object-bottom rounded"
             />
@@ -95,11 +184,11 @@ const MyBookings = () => {
             <div className="text-sm">
               <p>
                 <span className="text-gray-400">Total Tickets:</span>{" "}
-                {item.seats.length}
+                {item.seats?.length || 0}
               </p>
               <p>
                 <span className="text-gray-400">Seat Number:</span>{" "}
-                {item.seats.join(", ")}
+                {item.seats?.join(", ") || "N/A"}
               </p>
             </div>
           </div>
