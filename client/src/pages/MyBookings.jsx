@@ -48,7 +48,7 @@ const MyBookings = () => {
         return;
       }
 
-      const res = await axios.get("https://render.com/docs/web-services#port-binding/checkout", {
+      const res = await axios.get("https://movie-project-backend-ufco.onrender.com/checkout", {
         headers: { Authorization: `Bearer ${token}` },
       });
 

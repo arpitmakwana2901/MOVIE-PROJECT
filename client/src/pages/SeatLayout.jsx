@@ -79,7 +79,7 @@ const SeatLayout = () => {
       }
 
       const res = await axios.post(
-        "http://localhost:3690/seat-booking/book-seats",
+        "https://movie-project-backend-ufco.onrender.com/seat-booking/book-seats",
         {
           movieId: id,
           time: selectedTime.time,
