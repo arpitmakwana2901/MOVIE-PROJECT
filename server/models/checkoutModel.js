@@ -62,5 +62,5 @@ const checkoutSchema = mongoose.Schema(
   { timestamps: true }
 );
 
-const CheckoutModel = mongoose.model("/checkout", checkoutSchema);
+const CheckoutModel = mongoose.model("checkout", checkoutSchema);
 module.exports = CheckoutModel;

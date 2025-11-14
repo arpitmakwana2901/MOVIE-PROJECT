@@ -8,6 +8,7 @@ const showSchema = new mongoose.Schema(
     release_date: { type: Date, required: true },
     vote_average: { type: Number, default: 0 },
     genres: { type: [String], default: [] },
+    watchTrailer: { type: String },
     runtime: { type: Number },
     language: { type: String, default: "ENGLISH" },
     cast: {
@@ -21,9 +22,10 @@ const showSchema = new mongoose.Schema(
     },
     showDates: {
       type: Map,
-      of: [String],
+      of: [String], // date => [times]
       default: {},
     },
+    price: { type: Number, required: true }, // 👈 added
   },
   { timestamps: true }
 );

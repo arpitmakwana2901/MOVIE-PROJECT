@@ -9,7 +9,9 @@ const TicketDetails = () => {
   useEffect(() => {
     const fetchTicket = async () => {
       try {
-        const res = await axios.get(`http://localhost:3690/buy-ticket/${id}`);
+        const res = await axios.get(
+          `https://movie-project-backend-ufco.onrender.com/buy-ticket/${id}`
+        );
         setTicket(res.data);
       } catch (err) {
         console.error("Error fetching ticket:", err);

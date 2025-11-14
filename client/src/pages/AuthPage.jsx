@@ -17,7 +17,7 @@ const AuthPage = () => {
     e.preventDefault();
     try {
       const responce = await axios.post(
-        "http://localhost:3690/user/registration",
+        "https://movie-project-backend-ufco.onrender.com/user/registration",
         data
       );
       alert(responce.data.message);
@@ -36,7 +36,7 @@ const AuthPage = () => {
     e.preventDefault();
     try {
       const responce = await axios.post(
-        "http://localhost:3690/user/login",
+        "https://movie-project-backend-ufco.onrender.com/user/login",
         data
       );
       console.log(responce);

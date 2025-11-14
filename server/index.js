@@ -9,8 +9,12 @@ const seatBookingRoute = require("./routes/seatBookingRoute");
 const bookingRoute = require("./routes/bookingRoute");
 const checkoutRoute = require("./routes/checkoutRoute");
 const paynowRoute = require("./routes/paynowRoute");
+const homepageRouter = require("./routes/homepageRoute");
+const FeaturedSectionRoute = require("./routes/FeaturedSectionRoute");
+const adminSidebarRoute = require("./routes/adminSidebarRoute");
+const dashboardRoute = require("./routes/adminDashboardRoute");
 const app = express();
-const PORT = 3690;
+require("dotenv").config()
 
 // app.set("view engine","ejs")
 
@@ -27,13 +31,17 @@ app.use("/buy-ticket", buyTicketRoute);
 app.use("/book-ticket", bookingRoute);
 app.use("/seat-layout", seatLayoutRoutes);
 app.use("/seat-booking", seatBookingRoute);
-app.use("/checkout",checkoutRoute);
-app.use("/payments",paynowRoute)
-app.listen(PORT, (error) => {
+app.use("/checkout", checkoutRoute);
+app.use("/payments", paynowRoute);
+app.use("/homepage", homepageRouter);
+app.use("/featuredSection", FeaturedSectionRoute);
+app.use("/adminSidebar", adminSidebarRoute);
+app.use("/adminDashboard", dashboardRoute);
+app.listen(process.env.PORT, (error) => {
   if (error) {
     console.log("Server is not connected", error.message);
     return;
   }
   connection();
-  console.log("server is connected", PORT);
+  console.log("server is connected", process.env.PORT);
 });

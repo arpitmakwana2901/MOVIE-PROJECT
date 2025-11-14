@@ -6,7 +6,7 @@ const paynowRoute = express.Router();
 // ✅ Demo Payment Process
 paynowRoute.post("/process-payment", authenticate, async (req, res) => {
   try {
-    const { bookingId } = req.body; 
+    const { bookingId } = req.body;
 
     // ✅ Pehle booking find karein
     const booking = await CheckoutModel.findById(bookingId);

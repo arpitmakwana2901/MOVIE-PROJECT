@@ -47,7 +47,7 @@ userRoute.post("/login", async (req, res) => {
     // login
     const myToken = jwt.sign(
       { _id: user._id, userName: user.userName, email: user.email },
-      "jinay",
+      "arpit",
       { expiresIn: "168h" }
     );
 

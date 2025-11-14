@@ -7,7 +7,7 @@ const FetchMovie = () => {
 
   const fetchMovies = async () => {
     try {
-      const res = await axios.get("http://localhost:3690/shows/getShows");
+      const res = await axios.get("https://movie-project-backend-ufco.onrender.com/shows/getShows");
       setMovie(res.data);
     } catch (error) {
       console.error(error);

@@ -71,6 +71,7 @@ seatLayoutRoutes.put("/update/:movieId", authenticate, async (req, res) => {
     const { time, categories } = req.body;
 
     const layout = await SeatLayoutModel.findOne({ movieId });
+    console.log(movieId, "====");
     if (!layout)
       return res
         .status(404)

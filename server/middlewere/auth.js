@@ -6,7 +6,7 @@ const authenticate = async (req, res, next) => {
     if (!token) return res.status(401).json({ message: "Unauthorized" });
     console.log(token, "TOKEN");
     // Split "Bearer <token>"
-    const decoded = jwt.verify(token.split(" ")[1], "jinay");
+    const decoded = jwt.verify(token.split(" ")[1], process.env.SECRET_KEY);
     console.log(decoded, "DECODED");
     if (!decoded) return res.status(401).json({ message: "Unauthorized" });
 

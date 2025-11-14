@@ -14,7 +14,7 @@ const MovieDetails = () => {
     const fetchMovie = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:3690/shows/getShows/${id}`
+          `https://movie-project-backend-ufco.onrender.com/shows/getShows/${id}`
         );
         setMovie(res.data.data); // ✅ response se data pick
         console.log("Movie Response:", res.data.data);
@@ -62,10 +62,20 @@ const MovieDetails = () => {
           </p>
 
           <div className="flex items-center flex-wrap gap-4 mt-4">
-            <button className="flex items-center gap-2 px-7 py-3 text-sm bg-gray-800 hover:bg-gray-900 transition rounded-md font-medium cursor-pointer active:scale-95">
-              <PlayCircleIcon className="w-5 h-5 " />
+            <button
+              onClick={() => {
+                if (movie.watchTrailer) {
+                  window.open(movie.watchTrailer, "_blank"); // ✅ Opens trailer in new tab
+                } else {
+                  alert("Trailer not available!");
+                }
+              }}
+              className="flex items-center gap-2 px-7 py-3 text-sm bg-gray-800 hover:bg-gray-900 transition rounded-md font-medium cursor-pointer active:scale-95"
+            >
+              <PlayCircleIcon className="w-5 h-5" />
               Watch Trailer
             </button>
+
             <a
               href="#dateSelect"
               className="px-10 py-3 text-sm bg-primary hover:bg-primary-dull transition rounded-md font-medium cursor-pointer active:scale-95"

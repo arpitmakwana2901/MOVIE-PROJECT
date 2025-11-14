@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { ArrowRightIcon, ClockIcon } from "lucide-react";
+import { ArrowRightIcon, ClockIcon, MenuIcon, XIcon } from "lucide-react";
 import BlurCircle from "../components/BlurCircle";
 import { toast, Toaster } from "react-hot-toast";
 import { useAuth } from "../components/context/AuthContext";
@@ -17,10 +17,13 @@ const SeatLayout = () => {
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [loading, setLoading] = useState(true);
   const [moviesData, setMoviesData] = useState([]);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const fetchMoviesData = async () => {
     try {
-      const res = await axios.get("http://localhost:3690/shows/getShows");
+      const res = await axios.get(
+        "https://movie-project-backend-ufco.onrender.com/shows/getShows"
+      );
       setMoviesData(res.data.data || []);
     } catch (err) {
       console.error("Error fetching movies:", err);
@@ -30,7 +33,9 @@ const SeatLayout = () => {
 
   const fetchSeatLayout = async () => {
     try {
-      const res = await axios.get(`http://localhost:3690/seat-layout/${id}`);
+      const res = await axios.get(
+        `https://movie-project-backend-ufco.onrender.com/seat-layout/${id}`
+      );
       if (res.data.success) {
         console.log(res.data);
         setLayoutData(res.data.data);
@@ -84,8 +89,6 @@ const SeatLayout = () => {
       );
 
       if (res.data.success) {
-        toast.success("Booking successful! Redirecting...");
-
         const currentMovie = moviesData.find((movie) => movie._id === id);
 
         const bookingData = {
@@ -173,6 +176,15 @@ const SeatLayout = () => {
     return seat ? seat.isBooked : false;
   };
 
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
+  const handleTimeSelect = (slot) => {
+    setSelectedTime(slot);
+    setMobileMenuOpen(false);
+  };
+
   if (loading) return <div className="text-white px-6 py-12">Loading...</div>;
   if (!layoutData)
     return <div className="text-white px-6 py-12">No layout found</div>;
@@ -186,13 +198,13 @@ const SeatLayout = () => {
   });
 
   const renderSeats = (sectionKey, section) => (
-    <div className="mb-10">
+    <div className="mb-8 md:mb-10">
       <p className="text-center font-semibold text-sm text-gray-300 mb-2">
         ₹{section.price} {sectionKey.toUpperCase()}
       </p>
-      <div className="flex flex-col items-center gap-2">
+      <div className="flex flex-col items-center gap-1 md:gap-2">
         {section.rows.map((row) => (
-          <div key={row.rowName} className="flex gap-2 items-center">
+          <div key={row.rowName} className="flex gap-1 md:gap-2 items-center">
             <span className="text-xs text-gray-400 w-4">{row.rowName}</span>
             {row.seats.map((seat) => {
               const seatId = `${sectionKey}-${row.rowName}-${seat.seatNumber}`;
@@ -201,7 +213,7 @@ const SeatLayout = () => {
               const isBestseller = seat.isBestseller;
 
               let className =
-                "w-6 h-6 rounded-sm flex items-center justify-center border text-xs cursor-pointer transition-all";
+                "w-5 h-5 md:w-6 md:h-6 rounded-sm flex items-center justify-center border text-[10px] md:text-xs cursor-pointer transition-all";
 
               if (isSold) {
                 className += " bg-gray-300 cursor-not-allowed";
@@ -236,11 +248,60 @@ const SeatLayout = () => {
   );
 
   return (
-    <div className="flex flex-col md:flex-row px-6 md:px-16 lg:px-32 py-10 md:pt-16 text-white relative">
+    <div className="flex flex-col md:flex-row px-4 md:px-16 lg:px-32 py-6 md:py-10 md:pt-16 text-white relative min-h-screen">
       <Toaster position="top-center" reverseOrder={false} />
 
-      {/* Sidebar: Timings */}
-      <div className="w-full md:w-1/4 bg-[#1e0b0b] border border-[#3a1a1a] rounded-lg py-10 h-max md:sticky md:top-30">
+      {/* Mobile Menu Button */}
+      <div className="md:hidden fixed top-4 right-4 z-50">
+        <button
+          onClick={toggleMobileMenu}
+          className="bg-[#1e0b0b] border border-[#3a1a1a] p-2 rounded-lg"
+        >
+          {mobileMenuOpen ? (
+            <XIcon className="w-6 h-6" />
+          ) : (
+            <MenuIcon className="w-6 h-6" />
+          )}
+        </button>
+      </div>
+
+      {/* Mobile Menu Overlay */}
+      {mobileMenuOpen && (
+        <div
+          className="md:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
+          onClick={() => setMobileMenuOpen(false)}
+        />
+      )}
+
+      {/* Sidebar: Timings - Mobile Slide-in */}
+      <div
+        className={`w-4/5 max-w-sm fixed top-0 left-0 h-full bg-[#1e0b0b] border-r border-[#3a1a1a] z-50 transform transition-transform duration-300 ease-in-out md:hidden ${
+          mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        <div className="p-6 pt-20">
+          <p className="text-lg font-semibold mb-6">Available Timings</p>
+          <div className="space-y-2">
+            {layoutData.timeSlots.map((slot, index) => (
+              <div
+                key={`${slot.time}-${index}`}
+                onClick={() => handleTimeSelect(slot)}
+                className={`flex items-center gap-3 px-4 py-3 rounded-lg cursor-pointer transition ${
+                  selectedTime?.time === slot.time
+                    ? "bg-primary text-white"
+                    : "bg-[#2a0f0f] text-white hover:bg-[#3a1a1a]"
+                }`}
+              >
+                <ClockIcon className="w-4 h-4" />
+                <p className="text-sm">{slot.time}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Sidebar: Timings - Desktop */}
+      <div className="hidden md:block w-full md:w-1/4 bg-[#1e0b0b] border border-[#3a1a1a] rounded-lg py-10 h-max md:sticky md:top-30">
         <p className="text-lg font-semibold px-6">Available Timings</p>
         <div className="mt-5">
           {layoutData.timeSlots.map((slot, index) => (
@@ -261,56 +322,66 @@ const SeatLayout = () => {
       </div>
 
       {/* Main: Seat layout */}
-      <div className="flex-1 flex flex-col items-center max-md:mt-16 relative">
+      <div className="flex-1 flex flex-col items-center md:ml-6 lg:ml-8 relative pt-16 md:pt-0">
         <BlurCircle top="-100px" left="-100px" />
         <BlurCircle bottom="0" right="0" />
 
-        <h1 className="text-2xl font-semibold mb-4">Select your seat</h1>
-
+        {/* Mobile Selected Time Display */}
         {selectedTime && (
-          <p className="text-green-500 font-medium mb-4 text-sm">
-            Selected Time: {selectedTime.time}
-          </p>
+          <div className="md:hidden bg-[#2a0f0f] px-4 py-2 rounded-lg mb-4">
+            <p className="text-green-500 font-medium text-sm text-center">
+              Selected Time: {selectedTime.time}
+            </p>
+          </div>
         )}
 
+        <h1 className="text-xl md:text-2xl font-semibold mb-4 text-center">
+          Select your seat
+        </h1>
+
         {!selectedTime && (
-          <p className="text-red-500 font-medium mb-4 text-sm">
+          <p className="text-red-500 font-medium mb-4 text-sm text-center">
             Please select a time to choose seats
           </p>
         )}
 
-        {Object.entries(seatRows).map(([key, section]) =>
-          renderSeats(key, section)
-        )}
+        {/* Seat Layout Container with Scroll for Mobile */}
+        <div className="w-full overflow-x-auto pb-4">
+          <div className="min-w-min px-2">
+            {Object.entries(seatRows).map(([key, section]) =>
+              renderSeats(key, section)
+            )}
+          </div>
+        </div>
 
         {/* Screen */}
-        <div className="mt-6 w-3/4 bg-gray-400 h-2 rounded-lg flex items-center justify-center">
+        <div className="mt-4 md:mt-6 w-full max-w-2xl bg-gray-400 h-2 rounded-lg flex items-center justify-center mx-4">
           <p className="text-gray-800 text-xs font-bold">SCREEN</p>
         </div>
 
         {/* Legend */}
-        <div className="flex items-center gap-4 mt-8 text-sm flex-wrap justify-center">
+        <div className="flex items-center gap-3 md:gap-4 mt-6 text-xs md:text-sm flex-wrap justify-center px-4">
           <div className="flex items-center gap-1">
-            <div className="w-4 h-4 border border-green-500 bg-green-500"></div>
+            <div className="w-3 h-3 md:w-4 md:h-4 border border-green-500 bg-green-500"></div>
             <span className="text-green-500">Available</span>
           </div>
           <div className="flex items-center gap-1">
-            <div className="w-4 h-4 bg-green-700"></div>
+            <div className="w-3 h-3 md:w-4 md:h-4 bg-green-700"></div>
             <span className="text-white">Selected</span>
           </div>
           <div className="flex items-center gap-1">
-            <div className="w-4 h-4 bg-gray-300"></div>
+            <div className="w-3 h-3 md:w-4 md:h-4 bg-gray-300"></div>
             <span className="text-gray-300">Sold</span>
           </div>
           <div className="flex items-center gap-1">
-            <div className="w-4 h-4 border border-yellow-500"></div>
+            <div className="w-3 h-3 md:w-4 md:h-4 border border-yellow-500"></div>
             <span className="text-yellow-500">Bestseller</span>
           </div>
         </div>
 
-        {/* Checkout Button */}
+        {/* Selected Seats Summary - Sticky on Mobile */}
         {selectedSeats.length > 0 && (
-          <div className="mt-6 p-4 bg-[#2a0f0f] rounded-lg">
+          <div className="mt-6 p-4 bg-[#2a0f0f] rounded-lg w-full max-w-2xl sticky bottom-4 md:static">
             <p className="text-sm text-gray-300">
               Selected Seats:{" "}
               <span className="text-white font-semibold">
@@ -331,11 +402,12 @@ const SeatLayout = () => {
           </div>
         )}
 
-        <div className="w-full flex justify-center mt-10">
+        {/* Checkout Button */}
+        <div className="w-full flex justify-center mt-6 md:mt-10 pb-6 md:pb-0">
           <button
             onClick={handleCheckout}
             disabled={!selectedTime || selectedSeats.length === 0}
-            className={`flex items-center gap-2 px-8 py-3 transition rounded-full font-semibold text-white text-sm shadow-md active:scale-95 ${
+            className={`flex items-center gap-2 px-6 py-3 md:px-8 md:py-3 transition rounded-full font-semibold text-white text-sm shadow-md active:scale-95 ${
               selectedTime && selectedSeats.length > 0
                 ? "bg-[#e64949] hover:bg-[#d13c3c] cursor-pointer"
                 : "bg-gray-600 cursor-not-allowed"
