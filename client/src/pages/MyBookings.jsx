@@ -17,7 +17,9 @@ const MyBookings = () => {
 
   const fetchMoviesData = async () => {
     try {
-      const res = await axios.get("https://movie-project-backend-ufco.onrender.com/shows/getShows");
+      const res = await axios.get(
+        "https://movie-project-backend-ufco.onrender.com/shows/getShows"
+      );
       setMoviesData(res.data.data || []);
     } catch (err) {
       console.error("Error fetching movies:", err);
@@ -48,9 +50,12 @@ const MyBookings = () => {
         return;
       }
 
-      const res = await axios.get("https://movie-project-backend-ufco.onrender.com/checkout", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await axios.get(
+        "https://movie-project-backend-ufco.onrender.com/checkout",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
       if (res.data.success) {
         const mergedBookings = res.data.data.map((booking) =>
@@ -105,7 +110,7 @@ const MyBookings = () => {
   };
 
   return (
-    <div className="relative px-6 md:px-16 lg:px-40 pt-30 md:pt-40 min-h-[80vh]">
+    <div className="relative px-6 md:px-16 lg:px-40 pt-20 md:pt-40 min-h-[80vh] text-white">
       <Toaster position="top-center" />
       <BlurCircle top="100px" left="100px" />
       <div>
@@ -113,20 +118,11 @@ const MyBookings = () => {
       </div>
 
       <div className="flex justify-between items-center mb-4">
-        <h1 className="text-lg font-semibold">
+        <h1 className="text-xl font-semibold md:text-lg">
           {location.state?.latestBooking
             ? "Your Latest Booking"
             : "My Bookings"}
         </h1>
-
-        {/* {location.state?.latestBooking && (
-          <button
-            onClick={showAllBookings}
-            className="text-sm bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-full transition"
-          >
-            Show All Bookings
-          </button>
-        )} */}
       </div>
 
       {isLoading && (
@@ -145,7 +141,7 @@ const MyBookings = () => {
       {bookings.map((item, index) => (
         <div
           key={item._id || index}
-          className="flex flex-col md:flex-row justify-between bg-primary/8 border border-primary/20 rounded-lg mt-4 p-2 max-w-3xl"
+          className="flex flex-col justify-between bg-gray-800/80 border border-gray-700/50 rounded-lg mt-4 p-4 max-w-3xl mx-auto"
         >
           <div className="flex flex-col md:flex-row">
             <img
@@ -155,41 +151,44 @@ const MyBookings = () => {
                 assets.poster_placeholder
               }
               alt={item.movieTitle}
-              className="md:max-w-45 aspect-video h-auto object-cover object-bottom rounded"
+              className="w-full h-40 aspect-video object-cover object-bottom rounded md:max-w-45 md:h-auto"
             />
-            <div className="flex flex-col p-4">
+            <div className="flex flex-col p-2 md:p-4 pt-4 md:pt-4">
               <p className="text-lg font-semibold">{item.movieTitle}</p>
               <p className="text-gray-400 text-sm">
                 {timeFormat(item.runtime)}
               </p>
               <p className="text-gray-400 text-sm">Show Time: {item.time}</p>
-              <p className="text-gray-400 text-sm mt-auto">
+              <p className="text-gray-400 text-sm mt-2 md:mt-auto">
                 {dateFormat(item.showDate)}
               </p>
             </div>
           </div>
 
-          <div className="flex flex-col md:items-end md:text-right justify-between p-4">
-            <div className="flex items-center gap-4">
-              <p className="text-2xl font-semibold mb-3">
-                {currency}
-                {item.totalAmount}
-              </p>
-              {!item.isPaid && (
-                <button className="flex items-center gap-2 px-8 py-3 bg-[#e64949] hover:bg-[#d13c3c] transition rounded-full font-semibold text-white text-sm shadow-md active:scale-95">
-                  Pay Now
-                </button>
-              )}
-            </div>
-            <div className="text-sm">
+          <div className="flex flex-col-reverse md:flex-col md:items-end md:text-right justify-between p-2 pt-4 border-t border-gray-700/50 mt-4 md:border-t-0 md:mt-0 md:p-4">
+            <div className="text-sm order-2 md:order-none">
               <p>
                 <span className="text-gray-400">Total Tickets:</span>{" "}
                 {item.seats?.length || 0}
               </p>
               <p>
                 <span className="text-gray-400">Seat Number:</span>{" "}
-                {item.seats?.join(", ") || "N/A"}
+                {item.seats
+                  ?.map((seatId) => seatId.split("-")[1] + seatId.split("-")[2])
+                  .join(", ") || "N/A"}
               </p>
+            </div>
+
+            <div className="flex items-center justify-between md:justify-end gap-4 w-full order-1 md:order-none mb-3 md:mb-0">
+              <p className="text-2xl font-semibold">
+                {currency}
+                {item.totalAmount}
+              </p>
+              {!item.isPaid && (
+                <button className="flex items-center gap-2 px-6 py-2 bg-[#e64949] hover:bg-[#d13c3c] transition rounded-full font-semibold text-white text-sm shadow-md active:scale-95">
+                  Pay Now
+                </button>
+              )}
             </div>
           </div>
         </div>
