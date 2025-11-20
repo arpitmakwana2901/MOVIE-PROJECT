@@ -101,7 +101,7 @@ addShowRoute.get("/getShows", async (req, res) => {
 // ➤ Get single show
 addShowRoute.get("/getShows/:id", async (req, res) => {
   try {
-    const show = await ShowModel.findById(req.params.id); 
+    const show = await ShowModel.findById(req.params.id);
     if (!show) return res.status(404).json({ message: "Show not found" });
 
     res.status(200).json({

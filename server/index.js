@@ -14,7 +14,7 @@ const FeaturedSectionRoute = require("./routes/FeaturedSectionRoute");
 const adminSidebarRoute = require("./routes/adminSidebarRoute");
 const dashboardRoute = require("./routes/adminDashboardRoute");
 const app = express();
-require("dotenv").config()
+require("dotenv").config();
 
 // app.set("view engine","ejs")
 
@@ -22,7 +22,14 @@ require("dotenv").config()
 //     res.render("home")
 // })
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://movie-project-backend-ufco.onrender.com",
+    methods: "GET,POST,PUT,DELETE",
+    credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 app.use(express.json());
 
 app.use("/user", userRoute);

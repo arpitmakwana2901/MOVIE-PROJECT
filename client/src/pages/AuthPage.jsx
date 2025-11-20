@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../components/context/AuthContext";
+import toast, { Toaster } from "react-hot-toast"; // Import toast and Toaster
 
 const AuthPage = () => {
   const [activeTab, setActiveTab] = useState("login");
@@ -13,14 +14,71 @@ const AuthPage = () => {
     password: "",
   });
 
+  // --- Utility Function for Advanced Toast Styling ---
+  const showToast = (type, message) => {
+    const toastOptions = {
+      duration: 3000,
+      style: {
+        borderRadius: "10px",
+        background: "#333",
+        color: "#fff",
+        padding: "16px",
+        fontWeight: "bold",
+      },
+      iconTheme: {
+        primary: "#fff",
+        secondary: "#333",
+      },
+    };
+
+    if (type === "success") {
+      toast.success(message, toastOptions);
+    } else if (type === "error") {
+      toast.error(message, {
+        ...toastOptions,
+        style: { ...toastOptions.style, background: "#d32f2f" }, // Dark Red background for error
+      });
+    } else if (type === "validation") {
+      // Custom toast for validation errors (e.g., using toast.error)
+      toast.error(message, {
+        ...toastOptions,
+        style: { ...toastOptions.style, background: "#ff9800" }, // Orange background for warning/validation
+        icon: "⚠️",
+      });
+    }
+  };
+  // ----------------------------------------------------
+
   async function handleRegister(e) {
     e.preventDefault();
+
+    // --- Client-Side Validation for Registration ---
+    if (!data.userName.trim() || !data.email.trim() || !data.password.trim()) {
+      showToast("validation", "All fields are required for registration.");
+      return;
+    }
+    if (data.password.length < 5) {
+      showToast("validation", "Password must be at least 6 characters long.");
+      return;
+    }
+    // Simple Email Check (Advanced email validation usually requires a library or regex)
+    if (!/\S+@\S+\.\S+/.test(data.email)) {
+      showToast("validation", "Please enter a valid email address.");
+      return;
+    }
+    // ---------------------------------------------
+
     try {
       const responce = await axios.post(
         "https://movie-project-backend-ufco.onrender.com/user/registration",
         data
       );
-      alert(responce.data.message);
+
+      showToast(
+        "success",
+        responce.data.message || "Account created successfully. Please login."
+      );
+
       setData({
         userName: "",
         email: "",
@@ -28,19 +86,34 @@ const AuthPage = () => {
       });
       setActiveTab("login");
     } catch (error) {
-      alert("Error", error.message);
+      const errorMessage =
+        error.response?.data?.message ||
+        "Registration failed. Please check your network and try again.";
+      showToast("error", errorMessage);
     }
   }
 
   async function handleLogin(e) {
     e.preventDefault();
+
+    // --- Client-Side Validation for Login ---
+    if (!data.email.trim() || !data.password.trim()) {
+      showToast("validation", "Email and Password are required for login.");
+      return;
+    }
+    // ---------------------------------------
+
     try {
       const responce = await axios.post(
         "https://movie-project-backend-ufco.onrender.com/user/login",
-        data
+        { email: data.email, password: data.password } // Only sending required data
       );
-      console.log(responce);
-      alert(responce.data.message);
+
+      showToast(
+        "success",
+        responce.data.message || "Login successful! Welcome back."
+      );
+
       login(responce.data.myToken);
       setData({
         email: "",
@@ -48,12 +121,24 @@ const AuthPage = () => {
       });
       navigate("/movies");
     } catch (error) {
-      alert(error.message);
+      const errorMessage =
+        error.response?.data?.message ||
+        "Login failed. Please check your credentials and try again.";
+      showToast("error", errorMessage);
     }
   }
 
+  // Handle input change for all fields
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-black/80 px-4">
+      {/* Toaster component to show toasts */}
+      <Toaster position="top-center" reverseOrder={false} />
+
       <div className="w-full max-w-md bg-white rounded-xl shadow-lg overflow-hidden">
         {/* Header Tabs */}
         <div className="flex">
@@ -84,20 +169,23 @@ const AuthPage = () => {
           {activeTab === "login" ? (
             <div>
               <h2 className="text-xl font-semibold mb-4">Welcome Back!</h2>
+              {/* Form elements use 'name' and call generic handler */}
               <input
                 type="email"
+                name="email"
                 placeholder="Email Address"
                 className="w-full border p-3 rounded mb-3 text-black placeholder:text-gray-500 focus:outline-red-600"
                 value={data.email}
-                onChange={(e) => setData({ ...data, email: e.target.value })}
+                onChange={handleInputChange}
               />
 
               <input
                 type="password"
+                name="password"
                 placeholder="Password"
                 className="w-full border p-3 rounded mb-3 text-black placeholder:text-gray-500 focus:outline-red-600"
                 value={data.password}
-                onChange={(e) => setData({ ...data, password: e.target.value })}
+                onChange={handleInputChange}
               />
 
               <button
@@ -121,24 +209,27 @@ const AuthPage = () => {
               <h2 className="text-xl font-semibold mb-4">Create Account</h2>
               <input
                 type="text"
+                name="userName"
                 placeholder="Full Name"
                 className="w-full border p-3 rounded mb-3 text-black placeholder:text-gray-500 focus:outline-red-600"
                 value={data.userName}
-                onChange={(e) => setData({ ...data, userName: e.target.value })}
+                onChange={handleInputChange}
               />
               <input
                 type="email"
+                name="email"
                 placeholder="Email Address"
                 className="w-full border p-3 rounded mb-3 text-black placeholder:text-gray-500 focus:outline-red-600"
                 value={data.email}
-                onChange={(e) => setData({ ...data, email: e.target.value })}
+                onChange={handleInputChange}
               />
               <input
                 type="password"
+                name="password"
                 placeholder="Password"
                 className="w-full border p-3 rounded mb-3 text-black placeholder:text-gray-500 focus:outline-red-600"
                 value={data.password}
-                onChange={(e) => setData({ ...data, password: e.target.value })}
+                onChange={handleInputChange}
               />
               <button
                 className="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition"
