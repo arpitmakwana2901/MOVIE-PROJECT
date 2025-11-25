@@ -1,28 +1,75 @@
-// AuthContext.js
-import { createContext, useContext, useState } from "react";
+// context/AuthContext.jsx
+import { createContext, useContext, useState, useEffect } from "react";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem("token") || "");
-  console.log("hello");
-  console.log(token, "---");
-  const login = (token) => {
-    localStorage.setItem("token", token);
-    setToken(token);
-    console.log(token, "context-token");
+  const [userData, setUserData] = useState(
+    JSON.parse(localStorage.getItem("userData")) || null
+  );
+
+  // Local storage se data load karein
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    const storedUserData = localStorage.getItem("userData");
+
+    if (storedToken) {
+      
+      setToken(storedToken);
+    }
+
+    if (storedUserData) {
+      try {
+        setUserData(JSON.parse(storedUserData));
+      } catch (error) {
+        console.error("Error parsing user data:", error);
+        localStorage.removeItem("userData");
+      }
+    }
+  }, []);
+
+  const login = (newToken, userInfo = null) => {
+    // Token store karein
+    localStorage.setItem("token", newToken);
+    setToken(newToken);
+
+    // User data store karein
+    if (userInfo) {
+      localStorage.setItem("userData", JSON.stringify(userInfo));
+      setUserData(userInfo);
+    }
+
+    console.log("Login successful - token and user data stored");
   };
 
   const logout = () => {
+    // Sab kuch clear karein
     localStorage.removeItem("token");
-    setToken(null);
+    localStorage.removeItem("userData");
+    setToken("");
+    setUserData(null);
+    console.log("Logout successful - all data cleared");
+  };
+
+  const updateUserData = (userInfo) => {
+    localStorage.setItem("userData", JSON.stringify(userInfo));
+    setUserData(userInfo);
   };
 
   const isAuthenticated = !!token;
-  console.log(token, "return");
 
   return (
-    <AuthContext.Provider value={{ token, login, logout, isAuthenticated }}>
+    <AuthContext.Provider
+      value={{
+        token,
+        login,
+        logout,
+        isAuthenticated,
+        userData,
+        updateUserData,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
