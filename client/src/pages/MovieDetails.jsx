@@ -16,7 +16,7 @@ const MovieDetails = () => {
         const res = await axios.get(
           `https://movie-project-backend-ufco.onrender.com/shows/getShows/${id}`
         );
-        setMovie(res.data.data); // ✅ response se data pick
+        setMovie(res.data.data);
         console.log("Movie Response:", res.data.data);
       } catch (err) {
         console.error("Error fetching movie:", err);
@@ -65,7 +65,7 @@ const MovieDetails = () => {
             <button
               onClick={() => {
                 if (movie.watchTrailer) {
-                  window.open(movie.watchTrailer, "_blank"); // ✅ Opens trailer in new tab
+                  window.open(movie.watchTrailer, "_blank"); 
                 } else {
                   alert("Trailer not available!");
                 }

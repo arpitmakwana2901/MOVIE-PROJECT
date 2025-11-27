@@ -18,6 +18,8 @@ const MovieCard = ({ movie, showBuyButton = true }) => {
     }
 
     try {
+      console.log("Making API request..."); 
+
       const res = await axios.post(
         "https://movie-project-backend-ufco.onrender.com/buy-ticket/purchase",
         {
@@ -26,14 +28,29 @@ const MovieCard = ({ movie, showBuyButton = true }) => {
         },
         {
           headers: { Authorization: `Bearer ${token}` },
+          timeout: 10000, // Timeout add karein
         }
       );
+
+      console.log("API Response:", res); 
 
       toast.success("🎉 Ticket purchased successfully!");
       navigate(`/movies/${movie._id}`);
     } catch (err) {
-      console.error("Booking error:", err);
-      toast.error(err.response?.data?.message || "❌ Error purchasing ticket");
+      console.error("Full booking error:", err);
+
+      if (err.response) {
+        console.error("Error response:", err.response);
+        toast.error(
+          err.response?.data?.message || "❌ Error purchasing ticket"
+        );
+      } else if (err.request) {
+        console.error("No response received:", err.request);
+        toast.error("❌ Network error - Please check your connection");
+      } else {
+        console.error("Other error:", err.message);
+        toast.error("❌ Unexpected error occurred");
+      }
     }
   };
 

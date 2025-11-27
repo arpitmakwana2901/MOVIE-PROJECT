@@ -45,10 +45,9 @@ const Navbar = () => {
 
     setTimeout(() => {
       navigate("/?logout=true", { replace: true });
-    }, 400);
+    }, 600);
   };
 
-  // User name display function
   const getUserDisplayName = () => {
     if (userData) {
       const firstName = userData.firstName || "";
@@ -67,7 +66,6 @@ const Navbar = () => {
     return "User";
   };
 
-  // User initials for avatar
   const getUserInitials = () => {
     if (userData) {
       const firstName = userData.firstName || "";
@@ -147,6 +145,31 @@ const Navbar = () => {
         >
           Favorites
         </Link>
+
+        {isAuthenticated && (
+          <div className="md:hidden flex flex-col items-center gap-4 mt-8">
+            {/* User info for mobile */}
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-medium">
+                {getUserInitials()}
+              </div>
+              <span className="text-white font-medium">
+                {getUserDisplayName()}
+              </span>
+            </div>
+
+            <button
+              onClick={() => {
+                handleLogout();
+                setIsOpen(false);
+              }}
+              className="flex items-center gap-3 px-6 py-3 bg-red-600 hover:bg-red-700 transition rounded-full font-medium cursor-pointer text-white"
+            >
+              <LogOut className="w-5 h-5" />
+              <span>Logout</span>
+            </button>
+          </div>
+        )}
       </div>
 
       <div className="flex items-center gap-8">
@@ -163,18 +186,16 @@ const Navbar = () => {
           <div className="flex items-center gap-4">
             <button
               onClick={handleLogout}
-              className="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 transition rounded-full font-medium cursor-pointer text-white"
+              className="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 transition rounded-full font-medium cursor-pointer text-white max-md:hidden"
             >
-              {/* <LogOut className="w-4 h-4" /> */}
-              <span className="max-md:hidden">Logout</span>
+              <span>Logout</span>
             </button>
 
-            {/* User info - Database user data */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 max-md:hidden">
               <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-medium">
                 {getUserInitials()}
               </div>
-              <span className="max-md:hidden text-sm font-medium">
+              <span className="text-sm font-medium">
                 {getUserDisplayName()}
               </span>
             </div>
@@ -191,3 +212,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+git

@@ -6,7 +6,6 @@ const PrivateRoute = ({ children }) => {
   const { isAuthenticated } = useAuth();
   const location = useLocation();
 
-  // Detecting logout action via URL param
   const isLogoutAction =
     new URLSearchParams(location.search).get("logout") === "true";
 
@@ -29,4 +28,3 @@ const PrivateRoute = ({ children }) => {
 };
 
 export default PrivateRoute;
-  

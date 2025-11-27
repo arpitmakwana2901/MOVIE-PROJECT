@@ -282,9 +282,9 @@ const SeatLayout = () => {
         <div className="p-6 pt-20">
           <p className="text-lg font-semibold mb-6">Available Timings</p>
           <div className="space-y-2">
-            {layoutData.timeSlots.map((slot, index) => (
+            {layoutData.timeSlots.map((slot) => (
               <div
-                key={`${slot.time}-${index}`}
+                key={slot.time}
                 onClick={() => handleTimeSelect(slot)}
                 className={`flex items-center gap-3 px-4 py-3 rounded-lg cursor-pointer transition ${
                   selectedTime?.time === slot.time
@@ -348,9 +348,11 @@ const SeatLayout = () => {
         {/* Seat Layout Container with Scroll for Mobile */}
         <div className="w-full overflow-x-auto pb-4">
           <div className="min-w-min px-2">
-            {Object.entries(seatRows).map(([key, section]) =>
-              renderSeats(key, section)
-            )}
+            {Object.entries(seatRows).map(([key, section]) => (
+              <React.Fragment key={key}>
+                {renderSeats(key, section)}
+              </React.Fragment>
+            ))}
           </div>
         </div>
 

@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 
 const TicketDetails = () => {
-  const { id } = useParams(); // from /movies/:id
+  const { id } = useParams();
   const [ticket, setTicket] = useState(null);
 
   useEffect(() => {

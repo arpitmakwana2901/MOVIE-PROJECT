@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import MovieCard from "../components/MovieCard"; // Reuse your MovieCard
+import MovieCard from "../components/MovieCard"; 
 
 const UserMovies = () => {
   if (loading) return <p className="text-white text-center">LOADING...</p>;
