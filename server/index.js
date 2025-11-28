@@ -13,6 +13,7 @@ const homepageRouter = require("./routes/homepageRoute");
 const FeaturedSectionRoute = require("./routes/FeaturedSectionRoute");
 const adminSidebarRoute = require("./routes/adminSidebarRoute");
 const dashboardRoute = require("./routes/adminDashboardRoute");
+const favoriteRouter = require("./routes/favoriteRoute");
 const app = express();
 require("dotenv").config();
 
@@ -44,6 +45,7 @@ app.use("/homepage", homepageRouter);
 app.use("/featuredSection", FeaturedSectionRoute);
 app.use("/adminSidebar", adminSidebarRoute);
 app.use("/adminDashboard", dashboardRoute);
+app.use("/favorite", favoriteRouter);
 app.listen(process.env.PORT, (error) => {
   if (error) {
     console.log("Server is not connected", error.message);

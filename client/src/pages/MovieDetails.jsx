@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Heart, PlayCircleIcon, StarIcon } from "lucide-react";
 import timeFormat from "../lib/timeFormat";
 import DateSelect from "../components/DateSelect";
+import toast from "react-hot-toast";
 
 const MovieDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -17,7 +19,6 @@ const MovieDetails = () => {
           `https://movie-project-backend-ufco.onrender.com/shows/getShows/${id}`
         );
         setMovie(res.data.data);
-        console.log("Movie Response:", res.data.data);
       } catch (err) {
         console.error("Error fetching movie:", err);
       } finally {
@@ -28,12 +29,119 @@ const MovieDetails = () => {
     fetchMovie();
   }, [id]);
 
-  if (loading) return <div>Loading...</div>;
-  if (!movie) return <div>Movie not found</div>;
+  const handleAddToFavorites = async () => {
+    const token = localStorage.getItem("token");
+    
+    if (!token) {
+      toast.error("Please login to add to favorites");
+      navigate("/auth");
+      return;
+    }
+
+    try {
+      // ✅ Pehle test karein ki endpoint available hai ya nahi
+      console.log("Testing favorite endpoints...");
+      
+      // Different possible endpoints try karein
+      const endpoints = [
+        "https://movie-project-backend-ufco.onrender.com/favorite/add",
+        "https://movie-project-backend-ufco.onrender.com/favorites/add",
+        "https://movie-project-backend-ufco.onrender.com/api/favorite/add",
+        "https://movie-project-backend-ufco.onrender.com/api/favorites/add",
+        "https://movie-project-backend-ufco.onrender.com/user/favorite/add",
+      ];
+
+      let success = false;
+      let lastError = null;
+
+      for (let endpoint of endpoints) {
+        try {
+          console.log(`Trying endpoint: ${endpoint}`);
+          const response = await axios.post(
+            endpoint,
+            {
+              movieId: movie._id,
+              movie: movie
+            },
+            {
+              headers: { 
+                Authorization: `Bearer ${token}`
+              }
+            }
+          );
+          
+          console.log("✅ Success with endpoint:", endpoint);
+          console.log("Favorite response:", response.data);
+          toast.success("✅ Added to favorites!");
+          success = true;
+          break;
+          
+        } catch (err) {
+          lastError = err;
+          console.log(`❌ Failed with ${endpoint}:`, err.response?.status);
+          continue;
+        }
+      }
+
+      if (!success) {
+        throw lastError;
+      }
+      
+    } catch (err) {
+      console.error("Favorite error:", err);
+      
+      if (err.response?.status === 401) {
+        toast.error("Please login to add favorites");
+        navigate("/auth");
+      } else if (err.response?.status === 404) {
+        toast.error("Favorite feature not available yet");
+        console.log("Available endpoints check karein backend mein");
+      } else if (err.response?.status === 400) {
+        toast.error("Movie already in favorites");
+      } else {
+        toast.error("Favorite feature temporarily unavailable");
+      }
+    }
+  };
+
+  // Temporary function - Agar favorite backend setup nahi hai toh
+  const handleAddToFavoritesLocal = () => {
+    const token = localStorage.getItem("token");
+    
+    if (!token) {
+      toast.error("Please login to add to favorites");
+      navigate("/auth");
+      return;
+    }
+
+    // Local storage mein save karein temporarily
+    try {
+      const userFavorites = JSON.parse(localStorage.getItem('userFavorites') || '[]');
+      
+      // Check if already in favorites
+      const alreadyExists = userFavorites.some(fav => fav._id === movie._id);
+      
+      if (alreadyExists) {
+        toast.error("Movie already in favorites");
+        return;
+      }
+
+      // Add to favorites
+      userFavorites.push(movie);
+      localStorage.setItem('userFavorites', JSON.stringify(userFavorites));
+      
+      toast.success("✅ Added to favorites!");
+    } catch (err) {
+      toast.error("Error adding to favorites");
+    }
+  };
+
+  if (loading) return <div className="text-white text-center pt-40">Loading...</div>;
+  if (!movie) return <div className="text-white text-center pt-40">Movie not found</div>;
 
   return (
-    <div className="px-6 md:px-16  lg:px-40 pt-40">
-      <div className="flex flex-col  md:flex-row gap-8 max-w-6xl mx-auto">
+    <div className="px-6 md:px-16 lg:px-40 pt-40">
+      <div className="flex flex-col md:flex-row gap-8 max-w-6xl mx-auto">
         {/* Movie Poster */}
         <img
           src={movie.backdrop_path}
@@ -44,7 +152,7 @@ const MovieDetails = () => {
         {/* Movie Info */}
         <div className="relative flex flex-col gap-3">
           <p className="text-primary">{movie.language || "N/A"}</p>
-          <h1 className="text-4xl font-semibold">{movie.title}</h1>
+          <h1 className="text-4xl font-semibold text-white">{movie.title}</h1>
 
           <div className="flex items-center gap-2 text-gray-300">
             <StarIcon className="w-5 h-5 text-primary fill-primary" />
@@ -55,7 +163,7 @@ const MovieDetails = () => {
             {movie.overview}
           </p>
 
-          <p>
+          <p className="text-gray-300">
             {timeFormat(movie.runtime)} •{" "}
             {Array.isArray(movie.genres) ? movie.genres.join(", ") : "N/A"} •{" "}
             {new Date(movie.release_date).getFullYear()}
@@ -65,12 +173,12 @@ const MovieDetails = () => {
             <button
               onClick={() => {
                 if (movie.watchTrailer) {
-                  window.open(movie.watchTrailer, "_blank"); 
+                  window.open(movie.watchTrailer, "_blank");
                 } else {
-                  alert("Trailer not available!");
+                  toast.error("Trailer not available!");
                 }
               }}
-              className="flex items-center gap-2 px-7 py-3 text-sm bg-gray-800 hover:bg-gray-900 transition rounded-md font-medium cursor-pointer active:scale-95"
+              className="flex items-center gap-2 px-7 py-3 text-sm bg-gray-800 hover:bg-gray-900 transition rounded-md font-medium cursor-pointer active:scale-95 text-white"
             >
               <PlayCircleIcon className="w-5 h-5" />
               Watch Trailer
@@ -78,17 +186,22 @@ const MovieDetails = () => {
 
             <a
               href="#dateSelect"
-              className="px-10 py-3 text-sm bg-primary hover:bg-primary-dull transition rounded-md font-medium cursor-pointer active:scale-95"
+              className="px-10 py-3 text-sm bg-primary hover:bg-primary-dull transition rounded-md font-medium cursor-pointer active:scale-95 text-white"
             >
               Buy Tickets
             </a>
-            <button className="bg-gray-700 p-2.5 rounded-full transition cursor-pointer active:scale-95 ">
-              <Heart className={`w-5 h-5`} />
+            
+            {/* Favorite Button - Temporary local storage solution use karein */}
+            <button
+              onClick={handleAddToFavoritesLocal} // ✅ Change to local storage function
+              className="bg-gray-700 p-2.5 rounded-full transition cursor-pointer active:scale-95 hover:bg-red-500 hover:text-white text-white"
+            >
+              <Heart className="w-5 h-5" />
             </button>
           </div>
 
           {/* Cast Section */}
-          <p className="text-lg font-medium mt-20">Your Favorite Cast</p>
+          <p className="text-lg font-medium mt-20 text-white">Your Favorite Cast</p>
           <div className="overflow-x-auto no-scrollbar mt-8 pb-4">
             <div className="flex items-center gap-4 w-max px-4">
               {movie.cast?.slice(0, 12).map((cast, index) => (
@@ -98,10 +211,10 @@ const MovieDetails = () => {
                 >
                   <img
                     src={cast.profile_path}
-                    alt=""
+                    alt={cast.name}
                     className="rounded-full h-20 md:h-20 aspect-square object-cover"
                   />
-                  <p className="font-medium text-xs mt-3">{cast.name}</p>
+                  <p className="font-medium text-xs mt-3 text-white">{cast.name}</p>
                 </div>
               )) || <p className="text-gray-400 text-sm">No cast available</p>}
             </div>

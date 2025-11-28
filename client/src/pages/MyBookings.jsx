@@ -17,7 +17,9 @@ const MyBookings = () => {
 
   const fetchMoviesData = async () => {
     try {
-      const res = await axios.get("https://movie-project-backend-ufco.onrender.com/shows/getShows");
+      const res = await axios.get(
+        "https://movie-project-backend-ufco.onrender.com/shows/getShows"
+      );
       setMoviesData(res.data.data || []);
     } catch (err) {
       console.error("Error fetching movies:", err);
@@ -48,9 +50,12 @@ const MyBookings = () => {
         return;
       }
 
-      const res = await axios.get("https://movie-project-backend-ufco.onrender.com/checkout", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await axios.get(
+        "https://movie-project-backend-ufco.onrender.com/checkout",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
       if (res.data.success) {
         const mergedBookings = res.data.data.map((booking) =>

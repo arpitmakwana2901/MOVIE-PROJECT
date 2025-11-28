@@ -2,23 +2,24 @@ import { StarIcon } from "lucide-react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import timeFormat from "../lib/timeFormat";
-import { useAuth } from "./context/AuthContext";
 import axios from "axios";
 import toast from "react-hot-toast";
 
 const MovieCard = ({ movie, showBuyButton = true }) => {
   const navigate = useNavigate();
-  const { token } = useAuth();
 
   const handleBuyTicket = async () => {
+    // Get token from localStorage
+    const token = localStorage.getItem("token");
+
     if (!token) {
       toast.error("Login required to purchase tickets.");
-      navigate("/login");
+      navigate("/auth");
       return;
     }
 
     try {
-      console.log("Making API request..."); 
+      console.log("Making API request...");
 
       const res = await axios.post(
         "https://movie-project-backend-ufco.onrender.com/buy-ticket/purchase",
@@ -27,12 +28,14 @@ const MovieCard = ({ movie, showBuyButton = true }) => {
           seats: 1,
         },
         {
-          headers: { Authorization: `Bearer ${token}` },
-          timeout: 10000, // Timeout add karein
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          timeout: 10000,
         }
       );
 
-      console.log("API Response:", res); 
+      console.log("API Response:", res);
 
       toast.success("🎉 Ticket purchased successfully!");
       navigate(`/movies/${movie._id}`);
