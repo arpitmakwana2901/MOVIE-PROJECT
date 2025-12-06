@@ -18,12 +18,6 @@ const adminListBookingsRoute = require("./routes/adminListBookingsRoute");
 const app = express();
 require("dotenv").config();
 
-// app.set("view engine","ejs")
-
-// app.get("/",(req,res)=>{
-//     res.render("home")
-// })
-
 app.use(
   cors({
     origin: [
@@ -52,7 +46,7 @@ app.use("/adminSidebar", adminSidebarRoute);
 app.use("/adminDashboard", dashboardRoute);
 app.use("/favorite", favoriteRouter);
 app.use("/admin", adminListBookingsRoute);
-app.listen(process.env.PORT, (error) => {
+app.listen(process.env.PORT || 3690, (error) => {
   if (error) {
     console.log("Server is not connected", error.message);
     return;
