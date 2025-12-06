@@ -95,7 +95,7 @@ addShowRoute.get("/getShows", async (req, res) => {
     res
       .status(500)
       .json({ message: "Error fetching shows", error: error.message });
-  }
+  } 
 });
 
 // ➤ Get single show

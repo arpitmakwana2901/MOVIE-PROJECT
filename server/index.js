@@ -14,6 +14,7 @@ const FeaturedSectionRoute = require("./routes/FeaturedSectionRoute");
 const adminSidebarRoute = require("./routes/adminSidebarRoute");
 const dashboardRoute = require("./routes/adminDashboardRoute");
 const favoriteRouter = require("./routes/favoriteRoute");
+const adminListBookingsRoute = require("./routes/adminListBookingsRoute");
 const app = express();
 require("dotenv").config();
 
@@ -25,12 +26,16 @@ require("dotenv").config();
 
 app.use(
   cors({
-    origin: "https://movie-project-backend-ufco.onrender.com",
+    origin: [
+      "https://movie-client-render.onrender.com",
+      "http://localhost:5173",
+    ],
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+
 app.use(express.json());
 
 app.use("/user", userRoute);
@@ -46,6 +51,7 @@ app.use("/featuredSection", FeaturedSectionRoute);
 app.use("/adminSidebar", adminSidebarRoute);
 app.use("/adminDashboard", dashboardRoute);
 app.use("/favorite", favoriteRouter);
+app.use("/admin", adminListBookingsRoute);
 app.listen(process.env.PORT, (error) => {
   if (error) {
     console.log("Server is not connected", error.message);

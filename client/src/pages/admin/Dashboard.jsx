@@ -49,10 +49,13 @@ const Dashboard = () => {
   // ✅ Fetch data from backend
   const fetchDashboardData = async () => {
     try {
-      const res = await axios.get("https://render.com/docs/web-services#port-binding/adminDashboard");
+      const res = await axios.get(
+        "https://movie-project-backend-ufco.onrender.com/adminDashboard"
+      );
+
       if (res.data.success) {
         setDashboardData(res.data.data);
-        console.log("✅ Dashboard data fetched successfully:", res.data.data);
+        console.log("✅ Dashboard data:", res.data.data);
       } else {
         console.error("❌ Dashboard fetch failed:", res.data.message);
       }

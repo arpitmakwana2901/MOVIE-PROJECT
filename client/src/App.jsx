@@ -15,7 +15,7 @@ import Layout from "./pages/admin/Layout";
 import ListShows from "./pages/admin/ListShows";
 import ListBookings from "./pages/admin/ListBookings";
 import AddShows from "./pages/admin/AddShows";
-import AuthPage from "./pages/AuthPage"; // ✅ add this
+import AuthPage from "./pages/AuthPage";
 import PrivateRoute from "./components/PrivateRoute";
 import UserMovies from "./components/UserMovie";
 

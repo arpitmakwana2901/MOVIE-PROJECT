@@ -19,7 +19,7 @@ const MyBookings = () => {
     try {
       const res = await axios.get(
         "https://movie-project-backend-ufco.onrender.com/shows/getShows"
-      );
+      );  
       setMoviesData(res.data.data || []);
     } catch (err) {
       console.error("Error fetching movies:", err);
@@ -123,15 +123,6 @@ const MyBookings = () => {
             ? "Your Latest Booking"
             : "My Bookings"}
         </h1>
-
-        {/* {location.state?.latestBooking && (
-          <button
-            onClick={showAllBookings}
-            className="text-sm bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-full transition"
-          >
-            Show All Bookings
-          </button>
-        )} */}
       </div>
 
       {isLoading && (
@@ -180,12 +171,14 @@ const MyBookings = () => {
                 {currency}
                 {item.totalAmount}
               </p>
+
               {!item.isPaid && (
                 <button className="flex items-center gap-2 px-8 py-3 bg-[#e64949] hover:bg-[#d13c3c] transition rounded-full font-semibold text-white text-sm shadow-md active:scale-95">
                   Pay Now
                 </button>
               )}
             </div>
+
             <div className="text-sm">
               <p>
                 <span className="text-gray-400">Total Tickets:</span>{" "}

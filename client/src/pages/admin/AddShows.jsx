@@ -18,10 +18,9 @@ const AddShows = () => {
   const fetchMovies = async () => {
     try {
       const res = await axios.get(
-        "https://render.com/docs/web-services#port-binding/shows/getShows"
+        "https://movie-project-backend-ufco.onrender.com/shows/getShows"
       );
       setMovies(res.data.data || []);
-      console.log(res.data.data);
     } catch (error) {
       console.error("Movies fetch karne me error:", error);
       toast.error("Failed to fetch movies. Please try again.");
@@ -42,7 +41,7 @@ const AddShows = () => {
 
     try {
       const res = await axios.post(
-        "https://render.com/docs/web-services#port-binding/shows/addShow",
+        "https://movie-project-backend-ufco.onrender.com/shows/addShow",
         {
           title: movie.title,
           overview: movie.overview,

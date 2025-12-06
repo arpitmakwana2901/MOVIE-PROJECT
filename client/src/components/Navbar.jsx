@@ -19,7 +19,7 @@ const Navbar = () => {
         color: "#fff",
         padding: "16px",
         fontWeight: "bold",
-      },
+      },                                                                                                                                                                                                                                                                                                                                                                                                                                                   
     };
 
     if (type === "success") {
